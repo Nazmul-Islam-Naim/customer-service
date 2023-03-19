@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::group(['prefix'=>'auth'],function(){
         Route::post('/profile',[UserController::class,'profile']);
         Route::put('/update',[UserController::class,'update']);
         Route::post('/logout',[UserController::class,'logout']);
+
+        Route::apiResource('customers',CustomerController::class);
     });
 });
 

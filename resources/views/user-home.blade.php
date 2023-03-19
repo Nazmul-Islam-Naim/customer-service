@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			<!------------------- chart  ---------------------->
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+			{{-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
 				<div class="card">
 					<div class="card-header">
 						<div class="card-title">Stock product current state</div>
@@ -67,7 +67,7 @@
 						<div id="basic-pie-graph" style="width: 50%; margin-left: 11%"></div>
 					</div>
 				</div>
-			</div>
+			</div> --}}
 		</div>
 		<!-- Row end -->
 	</div>

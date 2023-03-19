@@ -132,6 +132,67 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <!-------------- area part ------------>
+                                <li class="default-sidebar-dropdown {{(
+                                    $url==config('app.area').'/division' || $url==config('app.area').'/division/create' || $url==(request()->is(config('app.area').'/division/*/edit')) ||
+                                    $url==config('app.area').'/district' || $url==config('app.area').'/district/create' || $url==(request()->is(config('app.area').'/district/*/edit')) ||
+                                    $url==config('app.area').'/area' || $url==config('app.area').'/area/create' || $url==(request()->is(config('app.area').'/area/*/edit'))) ? 'active':''}}">
+                                    <a href="javascript::void(0)">
+                                        <i class="icon-user"></i>
+                                        <span class="menu-text">Area Management</span>
+                                    </a>
+                                    <div class="default-sidebar-submenu">
+                                        <ul>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.area').'/division'}}" class="{{($url==config('app.area').'/division' || $url==config('app.area').'/division/create' || $url==(request()->is(config('app.area').'/division/*/edit'))) ? 'current-page':''}}">Division</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.area').'/district'}}" class="{{($url==config('app.area').'/district' || $url==config('app.area').'/district/create' || $url==(request()->is(config('app.area').'/district/*/edit'))) ? 'current-page':''}}">District</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.area').'/area'}}" class="{{($url==config('app.area').'/area' || $url==config('app.area').'/area/create' || $url==(request()->is(config('app.area').'/area/*/edit'))) ? 'current-page':''}}">Area</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-------------- Customer part ------------>
+                                <li class="default-sidebar-dropdown {{(
+                                    $url==config('app.customer').'/business-category' || $url==config('app.customer').'/business-category/create' || $url==(request()->is(config('app.customer').'/business-category/*/edit')) ||
+                                    $url==config('app.customer').'/customers' || $url==config('app.customer').'/customers/create' || $url==(request()->is(config('app.customer').'/customers/*/edit'))) ? 'active':''}}">
+                                    <a href="javascript::void(0)">
+                                        <i class="icon-box"></i>
+                                        <span class="menu-text">Customer</span>
+                                    </a>
+                                    <div class="default-sidebar-submenu">
+                                        <ul>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/business-category'}}" class="{{($url==config('app.customer').'/business-category' || $url==config('app.customer').'/business-category/create' || $url==(request()->is(config('app.customer').'/business-category/*/edit'))) ? 'current-page':''}}">Business Category</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/customers'}}" class="{{($url==config('app.customer').'/customers' || $url==config('app.customer').'/customers/create' || $url==(request()->is(config('app.customer').'/customers/*/edit'))) ? 'current-page':''}}">Customer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-------------- product part ------------>
+                                <li class="default-sidebar-dropdown {{(
+                                    $url==config('app.product').'/business-category' || $url==config('app.product').'/business-category/create' || $url==(request()->is(config('app.product').'/business-category/*/edit')) ||
+                                    $url==config('app.product').'/products' || $url==config('app.product').'/products/create' || $url==(request()->is(config('app.product').'/products/*/edit'))) ? 'active':''}}">
+                                    <a href="javascript::void(0)">
+                                        <i class="icon-box"></i>
+                                        <span class="menu-text">Product</span>
+                                    </a>
+                                    <div class="default-sidebar-submenu">
+                                        <ul>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.product').'/product-category'}}" class="{{($url==config('app.product').'/product-category' || $url==config('app.product').'/product-category/create' || $url==(request()->is(config('app.product').'/product-category/*/edit'))) ? 'current-page':''}}">Product Category</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.product').'/products'}}" class="{{($url==config('app.product').'/products' || $url==config('app.product').'/products/create' || $url==(request()->is(config('app.product').'/products/*/edit'))) ? 'current-page':''}}">Products</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 <!-------------- change password part ------------>
                                 <li class="default-sidebar {{($url=='settings') ? 'active':''}}">
                                     <a href="{{URL::to('settings')}}">
@@ -181,11 +242,11 @@
                                 <li class="dropdown">
                                     <a href="{{ route('user-list.show',auth()->user()->id) }}" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
                                         <span class="avatar">
-                                            @if (!empty(auth()->user()->image))
+                                            {{-- @if (!empty(auth()->user()->image))
                                             <img class="profile-user-img img-responsive img-fluid" src="{{asset('upload/user/'.auth()->user()->image)}}" alt="User profile picture">
                                             @else
                                             <img class="profile-user-img img-responsive img-fluid" src="{{asset('upload/logo/no-image.jpg')}}" alt="User profile picture">
-                                            @endif
+                                            @endif --}}
                                         </span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end sm" aria-labelledby="userSettings" style="width: 21rem">

@@ -22,5 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(DivisionSeeder::class);
         $this->call(DistrictSeeder::class);
         $this->call(AreaSeeder::class);
+        $this->call(BusinessCategorySeeder::class);
+        $this->call(CustomerSeeder::class);
+        $this->call(ProductCategorySeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }
