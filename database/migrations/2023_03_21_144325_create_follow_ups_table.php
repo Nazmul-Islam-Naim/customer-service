@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('areas', function (Blueprint $table) {
+        Schema::create('follow_ups', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('address')->nullable();
-            $table->foreignId('district_id')->constrained('districts')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->dateTime('date_time')->comment('follow up date and time');
+            $table->string('lat');
+            $table->string('long');
+            $table->string('avatar')->nullable();
+            $table->text('note')->nullable();
             $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('areas');
+        Schema::dropIfExists('follow_ups');
     }
 };

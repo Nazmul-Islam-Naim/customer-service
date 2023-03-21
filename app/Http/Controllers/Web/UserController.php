@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Department;
 use App\Models\Designation;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use Validator;
 use Response;
@@ -32,7 +36,7 @@ class UserController extends Controller
     {
         Gate::authorize('app.users.index');
         if ($request->ajax()) {
-            $alldata= User::with(['department','designation','role'])
+            $alldata= User::with(['designation','role', 'division', 'district','areas'])
                             ->where('status', '1')
                             ->get();
             return DataTables::of($alldata)
@@ -63,9 +67,9 @@ class UserController extends Controller
     public function create()
     {
         Gate::authorize('app.users.create');
-        $data['roles']= Role::all();
-        $data['designations']= Designation::all();
-        $data['departments']= Department::all();
+        $data['roles']= Role::select('id','title')->get();
+        $data['designations']= Designation::select('id','title')->get();
+        $data['divisions']= Division::select('id','name')->get();
         return view('user.add-user', $data);
     }
 
@@ -77,6 +81,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd(json_encode($request->area_id));
+        // dd($request->area_id);
         Gate::authorize('app.users.create');
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:255',
@@ -84,9 +90,12 @@ class UserController extends Controller
             'phone' => 'required|max:15|unique:users',
             'password' => 'required|min:6',
             'role_id' => 'required',
-            'department_id' => 'required',
+            'division_id'=>'required|integer',
+            'district_id'=>'required|integer',
+            'area_id'=>'required',
             'designation_id' => 'required',
             'avatar' => 'nullable|image',
+            'nid' => 'nullable|image',
         ]);
         if ($validator->fails()) {
             Session::flash('flash_message', $validator->errors());
@@ -94,18 +103,29 @@ class UserController extends Controller
         }
         $data = $request->all();
         $data['password'] = Hash::make($request->password);
+        $data['area_id'] = json_encode($request->area_id);
 
         if(Arr::has($data, 'avatar')){
             $data['avatar'] = (Arr::pull($data, 'avatar'));
-            Image::make($data['avatar'])->resize(600,500);
+            Image::make($data['avatar'])->resize(600,600);
             $data['avatar'] = (Arr::pull($data, 'avatar'))->store('brands');
         }
 
+        if(Arr::has($data, 'nid')){
+            $data['nid'] = (Arr::pull($data, 'nid'));
+            Image::make($data['nid'])->resize(600,600);
+            $data['nid'] = (Arr::pull($data, 'nid'))->store('nid');
+        }
+
         try{
-            $insert = User::create($data);
+            DB::beginTransaction();
+            $user = User::create($data);
+            $user->areas()->attach($request->area_id);
+            DB::commit();
             Session::flash('flash_message','User Successfully Added !');
-            return redirect()->back()->with('status_color','success');
+            return redirect()->route('user-list.index')->with('status_color','success');
         }catch(\Exception $e){
+            dd($e->getMessage());
             Session::flash('flash_message','Faild to create user!');
             return redirect()->back()->with('status_color','danger');
         }
@@ -132,11 +152,18 @@ class UserController extends Controller
     public function edit($id)
     {
         Gate::authorize('app.users.edit');
-        $data['roles']= Role::all();
-        $data['designations']= Designation::all();
-        $data['departments']= Department::all();
-        $data['single_data']=User::findOrFail($id);
-        return view('user.add-user', $data);
+        $allareas = [];
+        $roles= Role::select('id','title')->get();
+        $designations= Designation::select('id','title')->get();
+        $divisions= Division::select('id','name')->get();
+        $districts= District::select('id','name')->get();
+        $areas= Area::select('id','name')->get();
+        $single_data=User::findOrFail($id);
+        foreach ($single_data->areas as $key => $value) {
+            $allareas[] = $value->id;
+        }
+        return view('user.add-user', ['roles' => $roles, 'designations' => $designations, 'divisions' => $divisions, 'districts' => $districts,
+    'areas' => $areas, 'single_data' =>$single_data,  'allareas' => $allareas]);
     }
 
     /**
@@ -151,11 +178,16 @@ class UserController extends Controller
         Gate::authorize('app.users.edit');
         $data=User::findOrFail($id);
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'role_id'=>'required|integer',
-            'department_id'=>'required|integer',
-            'designation_id'=>'required|integer',
-            'email' => 'required|unique:users,email,'.$data->id
+            'name' => 'required|string|min:2|max:255',
+            'email' => ['nullable', 'email', Rule::unique(User::class)->ignore($id)],
+            'phone' => ['required', 'max:15', Rule::unique(User::class)->ignore($id)],
+            'role_id' => 'required',
+            'division_id'=>'required|integer',
+            'district_id'=>'required|integer',
+            'area_id'=>'required',
+            'designation_id' => 'required',
+            'avatar' => 'nullable|image',
+            'nid' => 'nullable|image',
         ]);
         if ($validator->fails()) {
             Session::flash('flash_message', $validator->errors());
@@ -164,14 +196,16 @@ class UserController extends Controller
         
         $input = $request->all();
 
-        // user image
-        if ($request->hasFile('image')) {
-            $photo=$request->file('image');
-            $fileType=$photo->getClientOriginalExtension();
-            // dd($fileType);
-            $fileName=rand(1,1000).date('dmyhis').".".$fileType;
-            Image::make($photo)->resize(144,144)->save(public_path('upload/user/'.$fileName));
-            $input['image']=$fileName;
+        if(Arr::has($input, 'avatar')){
+            $input['avatar'] = (Arr::pull($input, 'avatar'));
+            Image::make($input['avatar'])->resize(600,600);
+            $input['avatar'] = (Arr::pull($input, 'avatar'))->store('brands');
+        }
+
+        if(Arr::has($input, 'nid')){
+            $input['nid'] = (Arr::pull($input, 'nid'));
+            Image::make($input['nid'])->resize(600,600);
+            $input['nid'] = (Arr::pull($input, 'nid'))->store('nid');
         }
             
         if ($request->password !="") {
@@ -182,9 +216,12 @@ class UserController extends Controller
         }
 
         try{
+            DB::beginTransaction();
             $data->update($input);
+            $data->areas()->sync($request->area_id);
+            DB::commit();
             Session::flash('flash_message','Data Successfully Updated !');
-            return redirect()->back()->with('status_color','warning');
+            return redirect()->route('user-list.index')->with('status_color','warning');
         }catch(\Exception $e){
             Session::flash('flash_message','Something Error Found !');
             return redirect()->back()->with('status_color','danger');
@@ -205,6 +242,18 @@ class UserController extends Controller
         return redirect()->back()->with('status_color','warning');
     }
 
-    // user list by yarja data table
+    // dependeci input field
+
+    public function districtByDivision(Request $request){
+        $districts = District::where('division_id',$request->id)->get();
+        return response()->json($districts);
+    }
+
+    public function areaByDistrict(Request $request){
+        $areas = Area::where('district_id',$request->id)->get();
+        return response()->json($areas);
+    }
+
+
 
 }

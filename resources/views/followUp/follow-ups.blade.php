@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Customer')
+@section('title', 'Follow Up')
 @section('content')
 <!-- Content Header (Page header) -->
 <?php
@@ -19,8 +19,7 @@
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Customer List</div>
-            <a class="btn btn-success" href="{{route('customers.index')}}"> <i class="icon-plus-circle"></i> Create New Product</a>
+            <div class="card-title">Follow Up List</div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -29,7 +28,6 @@
                 <thead>
                   <tr>
                     <th>Sl</th>
-                    <th>Avatar</th>
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Business</th>
@@ -76,7 +74,7 @@
 			serverSide: true,
 			processing: true,
       deferRender : true,
-			ajax: "{{route('customers.index')}}",
+			ajax: "{{route('follow-ups.index')}}",
       "lengthMenu": [[ 50, 150, 250, -1 ],[ '100', '150', '250', 'All' ]],
       dom: 'Blfrtip',
         buttons: [
@@ -120,62 +118,27 @@
           data: 'DT_RowIndex',
         },
 				{
-          data: 'avatar',
-          render: function(data, type, row) {
-            if (data != null) {
-            return "<img src={{ URL::to('/') }}/storage/" + data + " width='50px' class='img-thumbnail' />";
-          } else {
-            return '<img src="{{asset("upload/logo/no-image.jpg")}}" width="50px" class="img-thumbnail" />'
-          }
-          }
+          data: 'customer.name',
         },
 				{
-          data: 'name',
+          data: 'customer.mobile',
         },
 				{
-          data: 'mobile',
-        },
-				{
-          data: 'business_category.name',
+          data: 'customer.business_category.name',
         },
         {
-          data: 'area.name',
+          data: 'customer.area.name',
         },
         {
-          data: 'area.district.name',
+          data: 'customer.area.district.name',
         },
         {
-          data: 'area.district.division.name',
+          data: 'customer.area.district.division.name',
         },
 				{
           data: 'user.name',
         },
 			]
-    });
-     //-------- Delete single data with Ajax --------------//
-     $("#example").on("click", ".button-delete", function(e) {
-			  e.preventDefault();
-
-        var confirm = window.confirm('Are you sure want to delete data?');
-        if (confirm != true) {
-          return false;
-        }
-        var id = $(this).data('id');
-        var link = '{{route("customers.destroy",":id")}}';
-        var link = link.replace(':id', id);
-        var token = '{{csrf_token()}}';
-        $.ajax({
-          url: link,
-          type: 'POST',
-          data: {
-            '_method': 'DELETE',
-            '_token': token
-          },
-          success: function(data) {
-            table.ajax.reload();
-          },
-
-        });
     });
 });
 </script>

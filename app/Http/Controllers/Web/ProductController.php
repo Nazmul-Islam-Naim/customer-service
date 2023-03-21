@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest\CreateRequest;
 use App\Http\Requests\ProductRequest\UpdateRequest;
+use App\Models\BusinessCategory;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class ProductController extends Controller
     {
         // Gate::authorize('app.product.index');
         if ($request->ajax()) {
-           $alldata = Product::with('productCategory')->get();
+           $alldata = Product::with('businessCategory')->get();
            return DataTables::of($alldata)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
@@ -65,7 +66,7 @@ class ProductController extends Controller
                 ],
                 [
                     'name' => $request->name, 
-                    'product_cat_id' => $request->product_cat_id
+                    'business_cat_id' => $request->business_cat_id
                 ]
             );
             return response()->json(['success'=>'Product saved successfully.']);
@@ -106,8 +107,8 @@ class ProductController extends Controller
 
     // ajax part
 
-    public function productCategory(){
-        $data = ProductCategory::select('id','name')->get();
+    public function businessCategory(){
+        $data = BusinessCategory::select('id','name')->get();
         return response()->json($data);
     }
 }

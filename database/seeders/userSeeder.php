@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Area;
 use App\Models\Department;
 use App\Models\Designation;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -27,7 +30,8 @@ class userSeeder extends Seeder
             'password' => Hash::make('password'),
             'role_id' => Role::where('slug', 'admin')->first()->id,
             'designation_id' => Designation::first()->id,
-            'department_id' => Department::first()->id,
+            'division_id' => Division::first()->id,
+            'district_id' => District::first()->id,
             'status' => true
         ]);
     }

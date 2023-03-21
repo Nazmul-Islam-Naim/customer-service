@@ -60,7 +60,7 @@ return [
     'user' => 'user',
     'area' => 'area',
     'customer' => 'customer',
-    'product' => 'product',
+    'business' => 'business',
 
     /*
     |--------------------------------------------------------------------------

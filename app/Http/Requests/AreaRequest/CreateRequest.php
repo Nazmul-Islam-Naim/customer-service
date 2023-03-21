@@ -28,7 +28,6 @@ class CreateRequest extends FormRequest
             'name' => ['required', 'max:255', Rule::unique(Area::class) ],
             'address' => ['nullable', 'max:255' ],
             'district_id' => ['required'],
-            'user_id' => ['required'],
         ];
     }
 }

@@ -20,13 +20,15 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
-            $table->foreignId('department_id')->constrained('departments')->onDelete('cascade');
             $table->foreignId('designation_id')->constrained('designations')->onDelete('cascade');
+            $table->foreignId('division_id')->constrained('divisions')->onDelete('cascade');
+            $table->foreignId('district_id')->constrained('districts')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('deleted_at')->nullable();
+            $table->string('nid')->nullable();
             $table->boolean('status')->default(true);
+            $table->decimal('target',15,2)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\DesignationController;
 use App\Http\Controllers\Web\AreaController;
 use App\Http\Controllers\Web\DistrictController;
 use App\Http\Controllers\Web\DivisionController;
+use App\Http\Controllers\Web\FollowUpController;
 use App\Http\Controllers\Web\ProductCategoryController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ProfileController;
@@ -39,34 +40,42 @@ Route::middleware('auth:web')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     
-    //******** users part *******//
-    Route::prefix(config('app.user'))->group(function () {
-        Route::resource('department', DepartmentController::class);
-        Route::resource('designation', DesignationController::class);
-        Route::resource('user-list', UserController::class);
-        Route::resource('user-role', RoleController::class);
-    });
-
-    //******** users part *******//
+    //******** area part *******//
     Route::prefix(config('app.area'))->group(function () {
         Route::resource('division', DivisionController::class);
         Route::resource('district', DistrictController::class);
         Route::resource('area', AreaController::class);
     });
 
-    //******** customers part *******//
-    Route::prefix(config('app.customer'))->group(function () {
-        Route::resource('business-category', BusinessCategoryController::class);
-        Route::resource('customers', CustomerController::class);
+    //******** users part *******//
+    Route::prefix(config('app.user'))->group(function () {
+        Route::resource('department', DepartmentController::class);
+        Route::resource('designation', DesignationController::class);
+        Route::resource('user-list', UserController::class);
+        Route::resource('user-role', RoleController::class);
+
+        //ajax
+        Route::post('get-district-by-division-id',[UserController::class, 'districtByDivision'])->name('get-district-by-division-id');
+        Route::post('get-area-by-district-id',[UserController::class, 'areaByDistrict'])->name('get-area-by-district-id');
     });
 
-    //******** product part *******//
-    Route::prefix(config('app.product'))->group(function () {
-        Route::resource('product-category', ProductCategoryController::class);
+    //******** business and product part *******//
+    Route::prefix(config('app.business'))->group(function () {
+        Route::resource('business-category', BusinessCategoryController::class);
         Route::resource('products',ProductController::class);
 
         //ajax
-        Route::get('ajax-product-category',[ProductController::class,'productCategory'])->name('ajax-product-category');
+        Route::get('ajax-business-category',[ProductController::class,'businessCategory'])->name('ajax-business-category');
+    });
+    
+    //******** customers part *******//
+    Route::prefix(config('app.customer'))->group(function () {
+        Route::resource('customers', CustomerController::class);
+    });
+
+    //******** follow up part *******//
+    Route::prefix(config('app.customer'))->group(function () {
+        Route::resource('follow-ups', FollowUpController::class);
     });
 
 });

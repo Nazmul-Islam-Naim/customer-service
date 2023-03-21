@@ -46,15 +46,15 @@
                       <th>#</th>
                       <th>Image</th>
                       <th>Name</th>
-                      <th>Department</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
                       <th>Designation</th>
                       <th>Role</th>
-                      <th>Email</th>
+                      <th>Area</th>
                       <th>Status</th>
                       <th>Actions</th>
                       </tr>
                     </thead>
-                    <tbody></tbody>
                   </table>
                 </div>
               </div>
@@ -141,9 +141,9 @@
           data: 'avatar',
           render: function(data, type, row) {
             if (data != null) {
-            return "<img src={{ URL::to('/') }}/storage/" + data + " width='144px' class='img-thumbnail' />";
+            return "<img src={{ URL::to('/') }}/storage/" + data + " width='50px' height='50px' class='img-thumbnail' />";
           } else {
-            return '<img src="{{asset("upload/logo/no-image.jpg")}}" width="144px" class="img-thumbnail" />'
+            return '<img src="{{asset("upload/logo/no-image.jpg")}}" width="50px" height="50px" class="img-thumbnail" />'
           }
           }
         },
@@ -152,11 +152,15 @@
           render: function(data, type, row) {
             var url = '{{route("user-list.show",":id")}}'; 
             var url = url.replace(':id', row.designation_id);
+            var url = '#';
             return '<a href=' + url +'>'+ data +'</a>';
           }
         },
 				{
-          data: 'department.title',
+          data: 'email',
+        },
+				{
+          data: 'phone',
         },
         {
           data: 'designation.title',
@@ -165,7 +169,15 @@
           data: 'role.title',
         },
 				{
-          data: 'email',
+          data: 'areas',
+          render: function(data, display, row){
+            var allarea = '';
+            $.each(data, function (key, value) { 
+              allarea = allarea + value.name + ', ';
+            });
+            return allarea;
+
+          }
         },
         {
           data: 'status',

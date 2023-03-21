@@ -28,7 +28,6 @@ class UpdateRequest extends FormRequest
             'name' => ['required', 'max:255', Rule::unique(Area::class)->ignore($id) ],
             'address' => ['nullable', 'max:255' ],
             'district_id' => ['required'],
-            'user_id' => ['required'],
         ];
     }
 }

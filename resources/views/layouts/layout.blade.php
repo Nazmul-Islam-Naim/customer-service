@@ -76,7 +76,7 @@
 
                     <!-- Sidebar brand starts -->
                     <div class="default-sidebar-brand">
-                        <a href="{{URL::to('/home')}}" class="logo">
+                        <a href="{{URL::to('/dashboard')}}" class="logo">
                             <!-- <img src="{{asset('custom/img/logo.svg')}}" alt="Admin" /> -->
                             <!-- <h5>E-Store</h5><br> -->
                             <h6>{{Auth::user()->name}}</h6>
@@ -90,7 +90,7 @@
                             <ul>
                                 <!-------------- dashboard part ------------>
                                 <li class="default-sidebar-dropdown {{(
-                                    $url=='home' || 
+                                    $url=='dashboard' || 
                                     $url==config('app.account').'/daily-transaction') ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-home2"></i>
@@ -99,35 +99,7 @@
                                     <div class="default-sidebar-submenu">
                                         <ul>
                                             <li>
-                                                <a href="{{$baseUrl.'/home'}}"  class="{{($url=='home') ? 'current-page':''}}">{{ __('menu.home') }}</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <!-------------- user part ------------>
-                                <li class="default-sidebar-dropdown {{(
-                                    $url==config('app.user').'/department' || $url==config('app.user').'/department/create' || $url==(request()->is(config('app.user').'/department/*/edit')) ||
-                                    $url==config('app.user').'/designation' || $url==config('app.user').'/designation/create' || $url==(request()->is(config('app.user').'/designation/*/edit')) ||
-                                    $url==config('app.user').'/user-list' || $url==config('app.user').'/user-list/create' || $url==(request()->is(config('app.user').'/user-list/*/edit')) ||
-                                    $url==config('app.user').'/user-role' || $url==config('app.user').'/user-role/create' || $url==(request()->is(config('app.user').'/user-role/*/edit'))) ? 'active':''}}">
-                                    <a href="javascript::void(0)">
-                                        <i class="icon-user"></i>
-                                        <span class="menu-text">User Management</span>
-                                    </a>
-                                    <div class="default-sidebar-submenu">
-                                        <ul>
-                                            <li>
-                                                <a href="{{$baseUrl.'/'.config('app.user').'/department'}}" class="{{($url==config('app.user').'/department' || $url==config('app.user').'/department/create' || $url==(request()->is(config('app.user').'/department/*/edit'))) ? 'current-page':''}}">Department</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{$baseUrl.'/'.config('app.user').'/designation'}}" class="{{($url==config('app.user').'/designation' || $url==config('app.user').'/designation/create' || $url==(request()->is(config('app.user').'/designation/*/edit'))) ? 'current-page':''}}">Designation</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{$baseUrl.'/'.config('app.user').'/user-list'}}" class="{{($url==config('app.user').'/user-list' || $url==config('app.user').'/user-list/create' || $url==(request()->is(config('app.user').'/user-list/*/edit'))) ? 'current-page':''}}">User</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{$baseUrl.'/'.config('app.user').'/user-role'}}" class="{{($url==config('app.user').'/user-role' || $url==config('app.user').'/user-role/create' || $url==(request()->is(config('app.user').'/user-role/*/edit'))) ? 'current-page':''}}">User Role</a>
+                                                <a href="{{$baseUrl.'/dashboard'}}"  class="{{($url=='dashboard') ? 'current-page':''}}">Dashboard</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -155,6 +127,48 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <!-------------- user part ------------>
+                                <li class="default-sidebar-dropdown {{(
+                                    $url==config('app.user').'/designation' || $url==config('app.user').'/designation/create' || $url==(request()->is(config('app.user').'/designation/*/edit')) ||
+                                    $url==config('app.user').'/user-list' || $url==config('app.user').'/user-list/create' || $url==(request()->is(config('app.user').'/user-list/*/edit')) ||
+                                    $url==config('app.user').'/user-role' || $url==config('app.user').'/user-role/create' || $url==(request()->is(config('app.user').'/user-role/*/edit'))) ? 'active':''}}">
+                                    <a href="javascript::void(0)">
+                                        <i class="icon-user"></i>
+                                        <span class="menu-text">Employee Management</span>
+                                    </a>
+                                    <div class="default-sidebar-submenu">
+                                        <ul>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.user').'/designation'}}" class="{{($url==config('app.user').'/designation' || $url==config('app.user').'/designation/create' || $url==(request()->is(config('app.user').'/designation/*/edit'))) ? 'current-page':''}}">Designation</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.user').'/user-list'}}" class="{{($url==config('app.user').'/user-list' || $url==config('app.user').'/user-list/create' || $url==(request()->is(config('app.user').'/user-list/*/edit'))) ? 'current-page':''}}">User</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.user').'/user-role'}}" class="{{($url==config('app.user').'/user-role' || $url==config('app.user').'/user-role/create' || $url==(request()->is(config('app.user').'/user-role/*/edit'))) ? 'current-page':''}}">User Role</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-------------- business and product part ------------>
+                                <li class="default-sidebar-dropdown {{(
+                                    $url==config('app.business').'/business-category' || $url==config('app.business').'/business-category/create' || $url==(request()->is(config('app.business').'/business-category/*/edit')) ||
+                                    $url==config('app.business').'/products' || $url==config('app.business').'/products/create' || $url==(request()->is(config('app.business').'/products/*/edit'))) ? 'active':''}}">
+                                    <a href="javascript::void(0)">
+                                        <i class="icon-box"></i>
+                                        <span class="menu-text">Business Management</span>
+                                    </a>
+                                    <div class="default-sidebar-submenu">
+                                        <ul>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.business').'/business-category'}}" class="{{($url==config('app.business').'/business-category' || $url==config('app.business').'/business-category/create' || $url==(request()->is(config('app.business').'/business-category/*/edit'))) ? 'current-page':''}}">Business Category</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.business').'/products'}}" class="{{($url==config('app.business').'/products' || $url==config('app.business').'/products/create' || $url==(request()->is(config('app.business').'/products/*/edit'))) ? 'current-page':''}}">Products</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 <!-------------- Customer part ------------>
                                 <li class="default-sidebar-dropdown {{(
                                     $url==config('app.customer').'/business-category' || $url==config('app.customer').'/business-category/create' || $url==(request()->is(config('app.customer').'/business-category/*/edit')) ||
@@ -166,29 +180,22 @@
                                     <div class="default-sidebar-submenu">
                                         <ul>
                                             <li>
-                                                <a href="{{$baseUrl.'/'.config('app.customer').'/business-category'}}" class="{{($url==config('app.customer').'/business-category' || $url==config('app.customer').'/business-category/create' || $url==(request()->is(config('app.customer').'/business-category/*/edit'))) ? 'current-page':''}}">Business Category</a>
-                                            </li>
-                                            <li>
                                                 <a href="{{$baseUrl.'/'.config('app.customer').'/customers'}}" class="{{($url==config('app.customer').'/customers' || $url==config('app.customer').'/customers/create' || $url==(request()->is(config('app.customer').'/customers/*/edit'))) ? 'current-page':''}}">Customer</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
-                                <!-------------- product part ------------>
+                                <!-------------- follow part ------------>
                                 <li class="default-sidebar-dropdown {{(
-                                    $url==config('app.product').'/business-category' || $url==config('app.product').'/business-category/create' || $url==(request()->is(config('app.product').'/business-category/*/edit')) ||
-                                    $url==config('app.product').'/products' || $url==config('app.product').'/products/create' || $url==(request()->is(config('app.product').'/products/*/edit'))) ? 'active':''}}">
+                                    $url==config('app.customer').'/follow-ups' || $url==config('app.customer').'/follow-ups/create' || $url==(request()->is(config('app.customer').'/follow-ups/*/edit'))) ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-box"></i>
-                                        <span class="menu-text">Product</span>
+                                        <span class="menu-text">Follow Up</span>
                                     </a>
                                     <div class="default-sidebar-submenu">
                                         <ul>
                                             <li>
-                                                <a href="{{$baseUrl.'/'.config('app.product').'/product-category'}}" class="{{($url==config('app.product').'/product-category' || $url==config('app.product').'/product-category/create' || $url==(request()->is(config('app.product').'/product-category/*/edit'))) ? 'current-page':''}}">Product Category</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{$baseUrl.'/'.config('app.product').'/products'}}" class="{{($url==config('app.product').'/products' || $url==config('app.product').'/products/create' || $url==(request()->is(config('app.product').'/products/*/edit'))) ? 'current-page':''}}">Products</a>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/follow-ups'}}" class="{{($url==config('app.customer').'/follow-ups' || $url==config('app.customer').'/follow-ups/create' || $url==(request()->is(config('app.customer').'/follow-ups/*/edit'))) ? 'current-page':''}}">Follow Ups</a>
                                             </li>
                                         </ul>
                                     </div>

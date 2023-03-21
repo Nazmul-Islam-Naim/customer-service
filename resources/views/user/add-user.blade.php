@@ -61,22 +61,10 @@
                   <select class="select-single select2 js-state @error('role_id') is-invalid @enderror" data-live-search="true" name="role_id" required="">
                     <option value="">Select</option>
                     @foreach($roles as $role)
-                    <option value="{{$role->id}}" {{(!empty($single_data) && $single_data->role_id==$role->id)?'selected':''}}>{{$role->title}}</option>
+                    <option value="{{$role->id}}" {{(!empty($single_data) && $single_data->role_id == $role->id)?'selected':''}}>{{$role->title}}</option>
                     @endforeach
                   </select>
                   <div class="field-placeholder">Role<span class="text-danger">*</span></div>
-                </div>
-              </div>
-              <!------------------- department --------------------------->
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                <div class="field-wrapper">
-                  <select class="select-single select2 js-state @error('department_id') is-invalid @enderror" data-live-search="true" name="department_id"  required="">
-                    <option value="">Select</option>
-                    @foreach($departments as $department)
-                    <option value="{{$department->id}}" {{(!empty($single_data) && $single_data->department_id==$department->id)?'selected':''}}>{{$department->title}}</option>
-                    @endforeach
-                  </select>
-                  <div class="field-placeholder">Department<span class="text-danger">*</span></div>
                 </div>
               </div>
               <!------------------- designation --------------------------->
@@ -89,6 +77,46 @@
                     @endforeach
                   </select>
                   <div class="field-placeholder">Designation<span class="text-danger">*</span></div>
+                </div>
+              </div>
+              <!------------------- division --------------------------->
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                <div class="field-wrapper">
+                  <select class="select-single select2 js-state @error('division_id') is-invalid @enderror" data-live-search="true" name="division_id" id="division_id" required="">
+                    <option value="">Select</option>
+                    @foreach($divisions as $division)
+                    <option value="{{$division->id}}" {{(!empty($single_data) && $single_data->division_id == $division->id)?'selected':''}}>{{$division->name}}</option>
+                    @endforeach
+                  </select>
+                  <div class="field-placeholder">Division<span class="text-danger">*</span></div>
+                </div>
+              </div>
+              <!------------------- district --------------------------->
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                <div class="field-wrapper">
+                  <select class="select-single select2 js-state @error('district_id') is-invalid @enderror" data-live-search="true" name="district_id" id="district_id" required="">
+                    @if (!empty($single_data))
+                      <option value="">Select</option>
+                      @foreach($districts as $district)
+                      <option value="{{$district->id}}" {{(!empty($single_data) && $single_data->district_id == $district->id)?'selected':''}}>{{$district->name}}</option>
+                      @endforeach
+                    @endif
+                  </select>
+                  <div class="field-placeholder">District<span class="text-danger">*</span></div>
+                </div>
+              </div>
+              <!------------------- area --------------------------->
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                <div class="field-wrapper">
+                  <select class="select-multiple js-states select2 @error('area_id') is-invalid @enderror" multiple="multiple" name="area_id[]" id="area_id" required="">
+                    @if (!empty($single_data))
+                      <option value="">Select</option>
+                      @foreach($areas as $area)
+                      <option value="{{$area->id}}" {{(!empty($single_data) && in_array($area->id, $allareas))?'selected':''}}>{{$area->name}}</option>
+                      @endforeach
+                    @endif
+                  </select>
+                  <div class="field-placeholder">Area<span class="text-danger">*</span></div>
                 </div>
               </div>
               <!------------------- password --------------------------->
@@ -105,22 +133,18 @@
                   <div class="field-placeholder">Confirm Password <span class="text-danger">*</span></div>
                 </div>
               </div>
-              <!------------------- status --------------------------->
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                <div class="field-wrapper">
-                  <select name="status" class="form-control">
-                    <option value="">Select</option>
-                    <option value="1" {{!empty($single_data->status) && ($single_data->status == 1)? 'selected':''}}>Active</option>
-                    <option value="0" {{!empty($single_data->status) && ($single_data->status == 0)? 'selected':''}}>In-Active</option>
-                  </select>
-                  <div class="field-placeholder">Status<span class="text-danger">*</span></div>
-                </div>
-              </div>
               <!------------------- avatar --------------------------->
               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
                 <div class="field-wrapper">
                   <input type="file" name="avatar" value="">
                   <div class="field-placeholder">Avatar</div>
+                </div>
+              </div>
+              <!------------------- nid --------------------------->
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                <div class="field-wrapper">
+                  <input type="file" name="nid" value="">
+                  <div class="field-placeholder">NID</div>
                 </div>
               </div>
             </div>
@@ -139,4 +163,57 @@
   <!-- Content wrapper end -->
 </div>
 <!-- Content wrapper scroll end -->
+{!! Html::script('custom/js/jquery.min.js') !!}
+<script>
+  $(document).ready(function () {
+
+    $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+    });
+
+    $('#division_id').change(function (e) { 
+      e.preventDefault();
+      var divisionId = $(this).val();
+
+      $.ajax({
+        type: "POST",
+        url: "{{route('get-district-by-division-id')}}",
+        data: {"id":divisionId},
+        dataType: "JSON",
+        success: function (response) {
+          $('#district_id').empty();
+          $('#area_id').empty();
+          $('#district_id').append('<option value="">Select</option>');
+          $.each(response, function (key, value) { 
+            $('#district_id').append('<option  value="'+ value.id +'">' + value.name+ '</option>');
+          });
+        }
+      });
+      
+    });
+
+    $('#district_id').change(function (e) { 
+      e.preventDefault();
+      var districtId = $(this).val();
+
+      $.ajax({
+        type: "POST",
+        url: "{{route('get-area-by-district-id')}}",
+        data: {"id":districtId},
+        dataType: "JSON",
+        success: function (response) {
+          $('#area_id').empty();
+          $('#area_id').append('<option value="">Select</option>');
+          $.each(response, function (key, value) { 
+            $('#area_id').append('<option  value="'+ value.id +'">' + value.name+ '</option>');
+          });
+        }
+      });
+      
+    });
+
+  });
+</script>
 @endsection

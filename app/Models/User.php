@@ -44,18 +44,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'password',
-        'role_id',
-        'department_id',
-        'designation_id',
-        'email_verified_at',
-        'phone_verified_at',
-        'avatar',
-        'status',
-        'deleted_at',
+        'name', 'email', 'phone', 'password', 'role_id', 'designation_id', 'division_id', 'district_id',
+        'email_verified_at', 'phone_verified_at', 'avatar', 'nid', 'status', 'target', 'deleted_at',
     ];
 
     /**
@@ -75,6 +65,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
     ];
 
     //method
@@ -96,11 +87,16 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Designation::class);
     }
 
-    public function department(){
-        return $this->belongsTo(Department::class);
+    public function division(){
+        return $this->belongsTo(Division::class);
     }
 
-    public function area(){
-        return $this->hasOne(Area::class);
+    public function district(){
+        return $this->belongsTo(District::class);
     }
+
+    public function areas(){
+        return $this->belongsToMany(Area::class);
+    }
+
 }

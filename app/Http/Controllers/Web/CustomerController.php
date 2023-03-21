@@ -27,24 +27,10 @@ class CustomerController extends Controller
     {
         // Gate::authorize('app.dvision.index'); 
         if ($request->ajax()) {
-            $alldata= Customer::with(['businessCategory','user.area','user.area.district', 'user.area.district.division', 'user'])
+            $alldata= Customer::with(['businessCategory','area','area.district', 'area.district.division', 'user'])
                 ->get();
             return DataTables::of($alldata)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                ob_start() ?>
-
-                <ul class="list-inline m-0">
-                    <li class="list-inline-item">
-                        <a href="<?php echo route('customers.edit', $row->id); ?>" class="badge bg-primary badge-sm" data-id="<?php echo $row->id; ?>"><i class="icon-edit-3"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <button data-id="<?php echo $row->id; ?>" class="badge bg-danger badge-sm button-delete"><i class="icon-delete"></i></button>
-                    </li>
-                </ul>
-
-                <?php return ob_get_clean();
-                })->make(True);
+                ->addIndexColumn()->make(True);
             }
         return view('customer.customer-list');
     }

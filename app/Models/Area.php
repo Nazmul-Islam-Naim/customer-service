@@ -10,14 +10,15 @@ class Area extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'areas';
-    protected $fillable = [ 'name', 'address', 'district_id', 'user_id', 'deleted_at' ];
+    protected $fillable = [ 'name', 'address', 'district_id', 'deleted_at' ];
 
     //relation
 
     public function district(){
         return $this->belongsTo(District::class);
     }
-    public function user(){
-        return $this->belongsTo(User::class);
+
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 }

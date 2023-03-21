@@ -2,21 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\BusinessCategory;
+use App\Models\FollowUp;
+use App\Models\FollowUpProduct;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductSeeder extends Seeder
+class FollowUpProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Product::updateOrCreate([
-            'name' => 'Gear',
-            'business_cat_id' => BusinessCategory::first()->id,
+        FollowUpProduct::updateOrCreate([
+            'follow_up_id' => FollowUp::first()->id,
+            'product_id' => Product::first()->id
         ]);
     }
 }

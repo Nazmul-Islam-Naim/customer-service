@@ -18,13 +18,13 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(DepartmentSeeder::class);
         $this->call(DesignationSeeder::class);
-        $this->call(userSeeder::class);
         $this->call(DivisionSeeder::class);
         $this->call(DistrictSeeder::class);
         $this->call(AreaSeeder::class);
+        $this->call(userSeeder::class);
         $this->call(BusinessCategorySeeder::class);
-        $this->call(CustomerSeeder::class);
-        $this->call(ProductCategorySeeder::class);
         $this->call(ProductSeeder::class);
+        $this->call(CustomerSeeder::class);
+        $this->call(FollowUpSeeder::class);
     }
 }

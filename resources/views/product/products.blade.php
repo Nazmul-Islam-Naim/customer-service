@@ -29,8 +29,8 @@
                 <thead>
                   <tr>
                     <th>Sl</th>
-                    <th>Name</th>
-                    <th>Category</th>
+                    <th>Product Name</th>
+                    <th>Business Category</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -68,7 +68,7 @@
 
                   <!-- Field wrapper start -->
                   <div class="field-wrapper">
-                    <select class="product_cat_id select-single select2 js-state @error('product_cat_id') is-invalid @enderror" data-live-search="true" name="product_cat_id" id="product_cat_id"  required="">
+                    <select class="business_cat_id select-single select2 js-state @error('business_cat_id') is-invalid @enderror" data-live-search="true" name="business_cat_id" id="business_cat_id"  required="">
                       
                     </select>
                     <div class="field-placeholder">Category<span class="text-danger">*</span></div>
@@ -140,7 +140,7 @@
           data: 'name',
         },
 				{
-          data: 'product_category.name',
+          data: 'business_category.name',
         },
         {
           data: 'action',
@@ -160,15 +160,15 @@
       
         $.ajax({
           method: "GET",
-          url: "{{route('ajax-product-category')}}",
+          url: "{{route('ajax-business-category')}}",
           dataType: "json",
 
           success:function(data) {
-              $('.product_cat_id').empty();
-              $('.product_cat_id').focus;
-              $('.product_cat_id').append('<option value="">Select</option>');
+              $('.business_cat_id').empty();
+              $('.business_cat_id').focus;
+              $('.business_cat_id').append('<option value="">Select</option>');
               $.each(data, function(key, value){
-                $('select[name="product_cat_id"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
+                $('select[name="business_cat_id"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
               });
           }
         });
@@ -216,23 +216,23 @@
           $('#ajaxModel').modal('show');
           $('#product_id').val(data.id);
           $('#name').val(data.name);
-          var product_cat_id = data.product_cat_id;
+          var business_cat_id = data.business_cat_id;
           $.ajax({
           method: "GET",
-          url: "{{route('ajax-product-category')}}",
+          url: "{{route('ajax-business-category')}}",
           dataType: "json",
 
           success:function(data) {
-              $('.product_cat_id').empty();
-              $('.product_cat_id').focus;
-              $('.product_cat_id').append('<option value="">Select</option>');
+              $('.business_cat_id').empty();
+              $('.business_cat_id').focus;
+              $('.business_cat_id').append('<option value="">Select</option>');
               $.each(data, function(key, value){
-                if (value.id == product_cat_id) {
+                if (value.id == business_cat_id) {
                   selected = 'selected';
                 }else{
                   selected = '';
                 }
-                $('select[name="product_cat_id"]').append('<option '+selected+' value="'+ value.id +'">' + value.name+ '</option>');
+                $('select[name="business_cat_id"]').append('<option '+selected+' value="'+ value.id +'">' + value.name+ '</option>');
               });
           }
         });

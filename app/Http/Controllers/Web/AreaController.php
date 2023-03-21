@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AreaRequest\CreateRequest;
 use App\Http\Requests\AreaRequest\UpdateRequest;
+use App\Models\Area;
 use App\Models\District;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Area;
 use Validator;
 use Response;
 use Session;
@@ -28,7 +27,6 @@ class AreaController extends Controller
     {
         // Gate::authorize('app.dvision.index');
         $data['districts']= District::all();
-        $data['users']= User::all();
         $data['alldata']= Area::all();
         return view('area.area', $data);
     }
@@ -88,7 +86,6 @@ class AreaController extends Controller
         // Gate::authorize('app.Areas.edit');
         $data['single_data']= Area::find($id);
         $data['districts']= District::all();
-        $data['users']= User::all();
         $data['alldata']= Area::all();
         return view('area.area', $data);
     }

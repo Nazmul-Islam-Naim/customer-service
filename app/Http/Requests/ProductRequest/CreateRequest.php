@@ -26,12 +26,12 @@ class CreateRequest extends FormRequest
         if (!empty($this->product_id)) { 
             return [
                 'name' => ['required', 'max:255', Rule::unique(Product::class)->ignore($this->product_id)],
-                'product_cat_id' => ['required']
+                'business_cat_id' => ['required']
             ];
         } else {
             return [
                 'name' => ['required', 'max:255', Rule::unique(Product::class)],
-                'product_cat_id' => ['required']
+                'business_cat_id' => ['required']
             ];
         }
         

@@ -55,18 +55,7 @@
                     <option value="{{$district->id}}" {{(!empty($single_data) && $single_data->district_id == $district->id)?'selected':''}}>{{$district->name}}</option>
                     @endforeach
                   </select>
-                  <div class="field-placeholder">User<span class="text-danger">*</span></div>
-                </div>
-                <!-- Field wrapper end -->
-                <!-- Field wrapper start -->
-                <div class="field-wrapper">
-                  <select class="select-single select2 js-state @error('user_id') is-invalid @enderror" data-live-search="true" name="user_id"  required="">
-                    <option value="">Select</option>
-                    @foreach($users as $user)
-                    <option value="{{$user->id}}" {{(!empty($single_data) && $single_data->user_id == $user->id)?'selected':''}}>{{$user->name}}</option>
-                    @endforeach
-                  </select>
-                  <div class="field-placeholder">User<span class="text-danger">*</span></div>
+                  <div class="field-placeholder">District<span class="text-danger">*</span></div>
                 </div>
                 <!-- Field wrapper end -->
               </div>
@@ -97,7 +86,6 @@
                     <th>Address</th>
                     <th>Division</th>
                     <th>District</th>
-                    <th>User</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -110,7 +98,6 @@
                     <td>{{$data->address}}</td>
                     <td>{{$data->district->division->name}}</td>
                     <td>{{$data->district->name}}</td>
-                    <td>{{$data->user->name}}</td>
                     <td>
                       <div class="actions" style="height: 25px">
                         <a href="{{ route('area.edit', $data->id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
