@@ -5,6 +5,7 @@ namespace App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Stevebauman\Location\Facades\Location;
 
 class CreateRequest extends FormRequest
 {
@@ -23,17 +24,16 @@ class CreateRequest extends FormRequest
      */
     public function rules(): array
     {
+      
         return [
             'name' =>['required', 'max:255'], 
             'mobile' =>['required', 'max:15', Rule::unique(Customer::class)], 
             'email' =>['nullable', 'email',  Rule::unique(Customer::class)], 
-            'lat' =>['required', 'max:255'],
-            'long' =>['required', 'max:255'],
             'address' =>['nullable', 'max:255'], 
             'avatar' =>['nullable', 'max:255'],
-            'priority_id' =>['required'], 
+            'area_id' =>['required'],  
             'business_cat_id' =>['required'], 
-            'user_id' =>['required'],
+            'product_id' =>['required'], 
             'date' =>['required', 'date_format:Y-m-d'],
         ];
     }

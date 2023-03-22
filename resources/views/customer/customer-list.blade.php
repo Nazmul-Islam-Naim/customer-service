@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Customer List</div>
-            <a class="btn btn-success" href="{{route('customers.index')}}"> <i class="icon-plus-circle"></i> Create New Product</a>
+            <a class="btn btn-success" href="{{route('customers.create')}}"> <i class="icon-plus-circle"></i> Add New Customer</a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -32,11 +32,14 @@
                     <th>Avatar</th>
                     <th>Name</th>
                     <th>Mobile</th>
+                    <th>Lat</th>
+                    <th>Long</th>
                     <th>Business</th>
                     <th>Area</th>
-                    <th>Division</th>
                     <th>District</th>
+                    <th>Division</th>
                     <th>User</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
               </table>
@@ -84,7 +87,7 @@
             {
                 extend: 'excel',
                 exportOptions: {
-                    columns: [ 0, 2, 3,4,5,6]
+                    columns: [ 0, 2, 3,4,5,6,7,8,9,10]
                 },
                 messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
             },
@@ -108,7 +111,7 @@
                 $(win.document.body).css("height", "auto").css("min-height", "0");
                 },
                 exportOptions: {
-                    columns: [ 0, 2, 3,4,5,6,7,8]
+                    columns: [ 0, 2, 3,4,5,6,7,8,9,10]
                 },
                 messageBottom: null
             }
@@ -136,6 +139,12 @@
           data: 'mobile',
         },
 				{
+          data: 'lat',
+        },
+				{
+          data: 'long',
+        },
+				{
           data: 'business_category.name',
         },
         {
@@ -149,6 +158,9 @@
         },
 				{
           data: 'user.name',
+        },
+				{
+          data: 'action',
         },
 			]
     });

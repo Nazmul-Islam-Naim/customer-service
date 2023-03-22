@@ -71,6 +71,9 @@ Route::middleware('auth:web')->group(function () {
     //******** customers part *******//
     Route::prefix(config('app.customer'))->group(function () {
         Route::resource('customers', CustomerController::class);
+
+        //ajax
+        Route::post('get-products-by-business-cateygory-id',[CustomerController::class,'productsByCategory'])->name('get-products-by-business-cateygory-id');
     });
 
     //******** follow up part *******//

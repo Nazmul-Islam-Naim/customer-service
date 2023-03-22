@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\BusinessCategoryController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,8 @@ Route::group(['prefix'=>'auth'],function(){
         Route::post('/logout',[UserController::class,'logout']);
 
         Route::apiResource('customers',CustomerController::class);
+        Route::apiResource('business-categories',BusinessCategoryController::class);
+        Route::apiResource('products',ProductController::class);
     });
 });
 

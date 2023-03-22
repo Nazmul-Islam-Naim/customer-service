@@ -10,7 +10,8 @@ class Customer extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'customers';
-    protected $fillable = [ 'name', 'mobile', 'email', 'lat', 'long', 'address', 'avatar', 'priority_id', 'business_cat_id', 'area_id', 'user_id', 'date', 'deleted_at'];
+    protected $fillable = [ 'name', 'mobile', 'email', 'lat', 'long', 'address', 'avatar','division_id','district_id', 'area_id', 
+    'priority_id', 'business_cat_id', 'user_id', 'date', 'deleted_at'];
 
     //relation
     
@@ -21,7 +22,19 @@ class Customer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function division(){
+        return $this->belongsTo(Division::class);
+    }
+
+    public function district(){
+        return $this->belongsTo(District::class);
+    }
+    
     public function area(){
         return $this->belongsTo(Area::class);
+    }
+
+    public function products(){
+        return $this->belongsToMany(Product::class);
     }
 }

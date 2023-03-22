@@ -108,13 +108,13 @@ class UserController extends Controller
         if(Arr::has($data, 'avatar')){
             $data['avatar'] = (Arr::pull($data, 'avatar'));
             Image::make($data['avatar'])->resize(600,600);
-            $data['avatar'] = (Arr::pull($data, 'avatar'))->store('brands');
+            $data['avatar'] = (Arr::pull($data, 'avatar'))->store('user-avatar');
         }
 
         if(Arr::has($data, 'nid')){
             $data['nid'] = (Arr::pull($data, 'nid'));
             Image::make($data['nid'])->resize(600,600);
-            $data['nid'] = (Arr::pull($data, 'nid'))->store('nid');
+            $data['nid'] = (Arr::pull($data, 'nid'))->store('user-nid');
         }
 
         try{
@@ -199,13 +199,13 @@ class UserController extends Controller
         if(Arr::has($input, 'avatar')){
             $input['avatar'] = (Arr::pull($input, 'avatar'));
             Image::make($input['avatar'])->resize(600,600);
-            $input['avatar'] = (Arr::pull($input, 'avatar'))->store('brands');
+            $input['avatar'] = (Arr::pull($input, 'avatar'))->store('user-avatar');
         }
 
         if(Arr::has($input, 'nid')){
             $input['nid'] = (Arr::pull($input, 'nid'));
             Image::make($input['nid'])->resize(600,600);
-            $input['nid'] = (Arr::pull($input, 'nid'))->store('nid');
+            $input['nid'] = (Arr::pull($input, 'nid'))->store('user-nid');
         }
             
         if ($request->password !="") {

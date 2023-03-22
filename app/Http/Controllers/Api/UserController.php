@@ -42,15 +42,6 @@ class UserController extends Controller
             $data['avatar'] = (Arr::pull($data, 'avatar'))->store('brands');
         }
 
-        // user image
-        // if ($request->hasFile('avatar')) {
-        //     $photo=$request->file('avatar');
-        //     $fileType=$photo->getClientOriginalExtension();
-        //     $fileName=rand(1,1000).date('dmyhis').".".$fileType;
-        //     Image::make($photo)->resize(600,500)->save(public_path('upload/user/'.$fileName));
-        //     $data['avatar']=$fileName;
-        // }
-
         try {
             $user = User::create($data);
 

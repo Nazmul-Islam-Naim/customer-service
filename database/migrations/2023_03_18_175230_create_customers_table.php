@@ -20,9 +20,11 @@ return new class extends Migration
             $table->string('long');
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
+            $table->foreignId('division_id')->constrained('divisions')->onDelete('cascade');
+            $table->foreignId('district_id')->constrained('districts')->onDelete('cascade');
+            $table->foreignId('area_id')->constrained('areas')->onDelete('cascade');
             $table->integer('priority_id')->default(1);
             $table->foreignId('business_cat_id')->constrained('business_categories')->onDelete('cascade');
-            $table->foreignId('area_id')->constrained('areas')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->date('date')->comment('entry date');
             $table->date('deleted_at')->nullable();

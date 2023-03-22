@@ -16,4 +16,8 @@ class Product extends Model
     public function businessCategory(){
         return $this->belongsTo(BusinessCategory::class, 'business_cat_id');
     }
+
+    public function customers(){
+        return $this->belongsToMany(Customer::class);
+    }
 }

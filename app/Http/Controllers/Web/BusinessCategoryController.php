@@ -26,7 +26,7 @@ class BusinessCategoryController extends Controller
     {
         // Gate::authorize('app.dvision.index');
         $data['alldata']= BusinessCategory::all();
-        return view('customer.business-category', $data);
+        return view('business.business-category', $data);
     }
 
     /**
@@ -84,7 +84,7 @@ class BusinessCategoryController extends Controller
         // Gate::authorize('app.BusinessCategorys.edit');
         $data['single_data']= BusinessCategory::find($id);
         $data['alldata']= BusinessCategory::all();
-        return view('customer.business-category', $data);
+        return view('business.business-category', $data);
     }
 
     /**

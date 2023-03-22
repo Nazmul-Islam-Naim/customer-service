@@ -41,7 +41,7 @@ class ProductController extends Controller
             })->make(true);
         }
 
-        return view('product.products');
+        return view('business.products');
 
     }
 

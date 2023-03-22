@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest\CreateRequest;
 use App\Http\Requests\CustomerRequest\UpdateRequest;
+use App\Models\Area;
+use App\Models\BusinessCategory;
+use App\Models\District;
+use App\Models\Division;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Customer;
+use Intervention\Image\Facades\Image;
+use Stevebauman\Location\Facades\Location;
 use Validator;
 use Response;
 use Session;
@@ -30,7 +38,21 @@ class CustomerController extends Controller
             $alldata= Customer::with(['businessCategory','area','area.district', 'area.district.division', 'user'])
                 ->get();
             return DataTables::of($alldata)
-                ->addIndexColumn()->make(True);
+                ->addIndexColumn()
+                ->addColumn('action',function($row){
+                    ob_start() ?>
+
+                        <ul class="list-inline m-0">
+                            <li class="list-inline-item">
+                                <a href="<?php echo route('customers.edit', $row->id); ?>" class="badge bg-primary badge-sm" data-id="<?php echo $row->id; ?>"><i class="icon-edit-3"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <button data-id="<?php echo $row->id; ?>" class="badge bg-danger badge-sm button-delete"><i class="icon-delete"></i></button>
+                            </li>
+                        </ul>
+
+                    <?php return ob_get_clean();
+                })->make(True);
             }
         return view('customer.customer-list');
     }
@@ -42,7 +64,9 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        $areas = auth()->user()->areas;
+        $bCategories = BusinessCategory::select('id','name')->get();
+        return view('customer.create-edit-form',['areas' => $areas, 'bCategories' => $bCategories]);
     }
 
     /**
@@ -55,12 +79,29 @@ class CustomerController extends Controller
     {
         // Gate::authorize('app.Customers.create');
 
-        DB::beginTransaction();
+        $ipAddress = '103.86.199.121';
+
+        $location = Location::get($ipAddress);
+        $data = $request->all();
+        $data['lat'] = $location->latitude;
+        $data['long'] = $location->longitude;
+        $data['division_id'] = auth()->user()->division_id;
+        $data['district_id'] = auth()->user()->district_id;
+        $data['user_id'] = auth()->user()->id;
+
+        if(Arr::has($data, 'avatar')){
+            $data['avatar'] = (Arr::pull($data, 'avatar'));
+            Image::make($data['avatar'])->resize(600,600);
+            $data['avatar'] = (Arr::pull($data, 'avatar'))->store('customer-avatar');
+        }
+        
         try{
-            Customer::create($request->all());
+            DB::beginTransaction();
+            $customer = Customer::create($data);
+            $customer->products()->attach($request->product_id);
             DB::commit();
             Session::flash('flash_message','Customer Successfully Added !');
-            return redirect()->back()->with('status_color','success');
+            return redirect()->route('customers.index')->with('status_color','success');
         }catch(\Exception $e){
             Session::flash('flash_message','Something Error Found !');
             return redirect()->back()->with('status_color','danger');
@@ -88,9 +129,15 @@ class CustomerController extends Controller
     public function edit($id)
     {
         // Gate::authorize('app.Customers.edit');
-        $data['single_data']= Customer::find($id);
-        $data['alldata']= Customer::all();
-        return view('customer.customer', $data);
+        $allproducts = [];
+        $areas = auth()->user()->areas;
+        $bCategories = BusinessCategory::select('id','name')->get();
+        $products = Product::select('id','name')->get();
+        $single_data = Customer::find($id);
+        foreach ($single_data->products as  $value) {
+            $allproducts[] = $value->id;
+        }
+        return view('customer.create-edit-form', ['areas' => $areas, 'bCategories' => $bCategories, 'products' => $products, 'single_data' => $single_data, 'allproducts' => $allproducts]);
     }
 
     /**
@@ -103,11 +150,30 @@ class CustomerController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         // Gate::authorize('app.Customers.edit');
-        $data=Customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
+        $ipAddress = '103.86.199.121';
+
+        $location = Location::get($ipAddress);
+        $data = $request->all();
+        $data['lat'] = $location->latitude;
+        $data['long'] = $location->longitude;
+        $data['division_id'] = auth()->user()->division_id;
+        $data['district_id'] = auth()->user()->district_id;
+        $data['user_id'] = auth()->user()->id;
+
+        if(Arr::has($data, 'avatar')){
+            $data['avatar'] = (Arr::pull($data, 'avatar'));
+            Image::make($data['avatar'])->resize(600,600);
+            $data['avatar'] = (Arr::pull($data, 'avatar'))->store('customer-avatar');
+        }
+
         try{
-            $data->update($request->all());
+            DB::beginTransaction();
+            $customer->update($data);
+            $customer->products()->sync($request->product_id);
+            DB::commit();
             Session::flash('flash_message','Customer Successfully Updated !');
-            return redirect()->back()->with('status_color','warning');
+            return redirect()->route('customers.index')->with('status_color','warning');
         }catch(\Exception $e){
             Session::flash('flash_message','Something Error Found !');
             return redirect()->back()->with('status_color','danger');
@@ -123,6 +189,7 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         // Gate::authorize('app.Customers.destroy');
+
         try {
             $data = Customer::findOrFail($id);
             $data->delete();
@@ -133,5 +200,18 @@ class CustomerController extends Controller
             return redirect()->back()->with('status_color','danger');
         }
     }
+
+
+   /**
+     * get product id by business categories id.
+     *
+     * @param  int  $businessCategoryId
+     * @return \Illuminate\Http\Response
+     */ 
+
+     public function productsByCategory(Request $request){
+        $products = Product::where('business_cat_id',$request->businessCategoryId)->get();
+        return response()->json($products);
+     }
 }
 

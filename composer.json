@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "laravelcollective/html": "^6.4",
+        "stevebauman/location": "^6.6",
         "tymon/jwt-auth": "^2.0",
         "yajra/laravel-datatables": "^10.1"
     },
