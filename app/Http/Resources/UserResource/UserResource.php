@@ -14,19 +14,24 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // dd($this->areas);
+        // $areas = [];
+        // foreach ($this->areas as $value) {
+        //     $areas[] = $value->name;
+        // }
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
             'role' => $this->role->title,
-            'department' => $this->department->title,
             'designation' => $this->designation->title,
-            'area' => $this->area->name,
-            'address' => $this->area->name,
-            'district' => $this->area->district->name,
-            'division' => $this->area->district->division->name,
+            'division' => $this->division->name,
+            'district' => $this->district->name,
+            'area' => $this->areas()->select('areas.id','areas.name')->get(),
             'avatar' => $this->avatar,
+            'nid' => $this->nid,
+            'target' => $this->target,
             'status' => $this->status,
         ];
     }

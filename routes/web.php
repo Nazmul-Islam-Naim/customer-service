@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\ProductCategoryController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\RoleController;
+use App\Http\Controllers\Web\TargetController;
 use App\Http\Controllers\Web\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +80,11 @@ Route::middleware('auth:web')->group(function () {
     //******** follow up part *******//
     Route::prefix(config('app.customer'))->group(function () {
         Route::resource('follow-ups', FollowUpController::class);
+    });
+
+    //******** target part *******//
+    Route::prefix(config('app.customer'))->group(function () {
+        Route::resource('targets', TargetController::class);
     });
 
 });

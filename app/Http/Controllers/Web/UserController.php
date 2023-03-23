@@ -20,8 +20,8 @@ use Session;
 use Auth;
 use Hash;
 use DB;
-use DataTables;
 use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 
 
 
@@ -37,7 +37,7 @@ class UserController extends Controller
         Gate::authorize('app.users.index');
         if ($request->ajax()) {
             $alldata= User::with(['designation','role', 'division', 'district','areas'])
-                            ->where('status', '1')
+                            ->where([['role_id',2],['status',1]])
                             ->get();
             return DataTables::of($alldata)
             ->addIndexColumn()

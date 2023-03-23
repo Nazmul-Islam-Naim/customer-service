@@ -59,7 +59,7 @@ class UserController extends Controller
     // login 
     public function login(Request $request){
         $validator = Validator::make($request->all(),[
-            'email' => 'required|string|email',
+            'phone' => 'required',
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
@@ -84,6 +84,7 @@ class UserController extends Controller
             'expires_in' =>auth('api')->factory()->getTTL()*60 
         ]);
     }
+    
 
     // profile
 

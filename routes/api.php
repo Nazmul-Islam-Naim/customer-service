@@ -21,12 +21,15 @@ use Illuminate\Support\Facades\Route;
 //Authentication
 Route::group(['prefix'=>'auth'],function(){
     Route::post('/register',[UserController::class,'register']);
-    Route::post('/login',[UserController::class,'login']);
+    Route::post('/login',[UserController::class,'login'])->middleware('guest:api');
+    
     Route::group(['middleware'=>['auth:api']],function(){
         Route::post('/profile',[UserController::class,'profile']);
         Route::put('/update',[UserController::class,'update']);
         Route::post('/logout',[UserController::class,'logout']);
-
+    });
+    
+    Route::group(['middleware'=>['auth:api']],function(){
         Route::apiResource('customers',CustomerController::class);
         Route::apiResource('business-categories',BusinessCategoryController::class);
         Route::apiResource('products',ProductController::class);
