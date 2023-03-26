@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BusinessCategoyResource\BusinessCategoryResource;
+use App\Http\Resources\BusinessCategoryResources\BusinessCategoryResources;
 use App\Models\BusinessCategory;
+use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 
 class BusinessCategoryController extends Controller
 {
+    use ApiResponses;
     /**
      * Display a listing of the resource.
      */
@@ -16,9 +18,9 @@ class BusinessCategoryController extends Controller
     {
         try {
             $bCategories = BusinessCategory::select('id','name')->get();
-            return response()->json(BusinessCategoryResource::collection($bCategories));
+            return $this->respond(BusinessCategoryResources::collection($bCategories));
         } catch (\Exception $exception) {
-            return response()->json(['error'=>'Somthing went wrong!']);
+            return $this->exceptionRespond($exception);
         }
     }
 

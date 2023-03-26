@@ -7,6 +7,7 @@ use App\Http\Requests\CustomerRequest\CreateRequest;
 use App\Http\Requests\CustomerRequest\UpdateRequest;
 use App\Http\Resources\CustomerResource\CustomerResource;
 use App\Models\Customer;
+use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ use Intervention\Image\Facades\Image;
 
 class CustomerController extends Controller
 {
+    use ApiResponses;
     /**
      * Display a listing of the resource.
      */
@@ -59,9 +61,9 @@ class CustomerController extends Controller
     {
         try {
             $customer = Customer::findOrFail($id);
-            return response()->json(new CustomerResource($customer));
+            return $this->respond(new CustomerResource($customer));
         } catch (\Exception $exception) {
-            return response()->json(['error'=>'Somthing went wrong!']);
+            return $this->exceptionRespond($exception);
         }
     }
 

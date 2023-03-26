@@ -17,7 +17,12 @@ $(function(){
 		hoverColor: true,
 		series: {
 			regions: [{
-				values: gdpData,
+				values:  {
+					"AF": 16.63,
+					"AL": 11.58,
+					"DZ": 158.97,
+					// more data...
+				  },
 				scale: ['#4285F4'],
 				normalizeFunction: 'polynomial'
 			}]

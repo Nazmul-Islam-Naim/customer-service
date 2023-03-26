@@ -8,7 +8,6 @@ use App\Http\Controllers\Web\AreaController;
 use App\Http\Controllers\Web\DistrictController;
 use App\Http\Controllers\Web\DivisionController;
 use App\Http\Controllers\Web\FollowUpController;
-use App\Http\Controllers\Web\ProductCategoryController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\RoleController;
@@ -72,14 +71,21 @@ Route::middleware('auth:web')->group(function () {
     //******** customers part *******//
     Route::prefix(config('app.customer'))->group(function () {
         Route::resource('customers', CustomerController::class);
+        Route::get('/map',function(){
+            return view('map');
+        });
 
         //ajax
         Route::post('get-products-by-business-cateygory-id',[CustomerController::class,'productsByCategory'])->name('get-products-by-business-cateygory-id');
+        Route::get('get-lat-long',[CustomerController::class,'getLatLong'])->name('get-lat-long');
     });
 
     //******** follow up part *******//
     Route::prefix(config('app.customer'))->group(function () {
         Route::resource('follow-ups', FollowUpController::class);
+        Route::get('/follow-up-map',function(){
+            return 'under construction';
+        });
     });
 
     //******** target part *******//

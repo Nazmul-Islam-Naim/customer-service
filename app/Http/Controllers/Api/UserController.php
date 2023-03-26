@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\UserResource\UserResource;
+use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -19,6 +20,7 @@ use DB;
 
 class UserController extends Controller
 {
+    use ApiResponses;
     public function register(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|min:2|max:255',
@@ -89,7 +91,11 @@ class UserController extends Controller
     // profile
 
     public function profile(){
-        return response()->json(new UserResource(auth()->user()));
+        try {
+            return $this->respond(new UserResource(auth()->user()));
+        } catch (\Exception $exception) {
+            return $this->exceptionRespond($exception);
+        }
     }
 
     //logout

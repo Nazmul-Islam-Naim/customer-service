@@ -51,6 +51,11 @@
 
         <!-- Bootstrap Select CSS -->
         {!!Html::style('custom/vendor/bs-select/bs-select.css')!!}
+
+        <!-- leaflet Select css -->
+        {!!Html::style('custom/leaflet/1.7.1/css/leaflet.min.css')!!}
+        <!-- leaflet Select js -->
+        {!!Html::script('custom/leaflet/1.7.1/js/leaflet.min.js')!!}
         
     </head>
     <?php
@@ -91,7 +96,8 @@
                                 <!-------------- dashboard part ------------>
                                 <li class="default-sidebar-dropdown {{(
                                     $url=='dashboard' || 
-                                    $url==config('app.account').'/daily-transaction') ? 'active':''}}">
+                                    $url==config('app.customer').'/map' ||
+                                    $url==config('app.customer').'/follow-up-map') ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-home2"></i>
                                         <span class="menu-text">Dashboard</span>
@@ -100,6 +106,12 @@
                                         <ul>
                                             <li>
                                                 <a href="{{$baseUrl.'/dashboard'}}"  class="{{($url=='dashboard') ? 'current-page':''}}">Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/map'}}"  class="{{($url==config('app.customer').'/map') ? 'current-page':''}}">Customer Map</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/follow-up-map'}}"  class="{{($url==config('app.customer').'/follow-up-map') ? 'current-page':''}}">Customer Follow Up Map</a>
                                             </li>
                                         </ul>
                                     </div>

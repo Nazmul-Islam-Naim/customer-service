@@ -213,5 +213,16 @@ class CustomerController extends Controller
         $products = Product::where('business_cat_id',$request->businessCategoryId)->get();
         return response()->json($products);
      }
+   /**
+     * get product id by business categories id.
+     *
+     * @param  int  $businessCategoryId
+     * @return \Illuminate\Http\Response
+     */ 
+
+     public function getLatLong(Request $request){
+        $latLong = Customer::select('name','lat','long')->get();
+        return response()->json($latLong);
+     }
 }
 

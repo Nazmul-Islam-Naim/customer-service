@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource\ProductResource;
 use App\Models\Product;
+use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use ApiResponses;
     /**
      * Display a listing of the resource.
      */
@@ -16,10 +18,9 @@ class ProductController extends Controller
     {
         try {
             $products = Product::select('id','name', 'business_cat_id')->get();
-            return response()->json(ProductResource::collection($products));
+            return $this->respond(ProductResource::collection($products));
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
-            return response()->json(['error'=>'Somthing went wrong!']);
+            return $this->exceptionRespond($exception);
         }
     }
 
