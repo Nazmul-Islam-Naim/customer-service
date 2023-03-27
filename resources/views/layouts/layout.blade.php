@@ -214,7 +214,8 @@
                                 </li>
                                 <!-------------- target part ------------>
                                 <li class="default-sidebar-dropdown {{(
-                                    $url==config('app.customer').'/targets' || $url==config('app.customer').'/targets/create' || $url==(request()->is(config('app.customer').'/targets/*/edit'))) ? 'active':''}}">
+                                    $url==config('app.customer').'/targets/create' ||
+                                    $url==config('app.customer').'/targets' || $url==(request()->is(config('app.customer').'/targets/*/edit'))) ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-box"></i>
                                         <span class="menu-text">Targets</span>
@@ -222,7 +223,10 @@
                                     <div class="default-sidebar-submenu">
                                         <ul>
                                             <li>
-                                                <a href="{{$baseUrl.'/'.config('app.customer').'/targets'}}" class="{{($url==config('app.customer').'/targets' || $url==config('app.customer').'/targets/create' || $url==(request()->is(config('app.customer').'/targets/*/edit'))) ? 'current-page':''}}">Set Targets</a>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/targets/create'}}" class="{{($url==config('app.customer').'/targets/create') ? 'current-page':''}}">Set Targets</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/targets'}}" class="{{($url==config('app.customer').'/targets' || $url==(request()->is(config('app.customer').'/targets/*/edit'))) ? 'current-page':''}}">Targets</a>
                                             </li>
                                         </ul>
                                     </div>

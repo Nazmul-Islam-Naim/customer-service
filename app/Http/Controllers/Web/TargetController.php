@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Enum\Month;
+use App\Enum\Year;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,7 +44,9 @@ class TargetController extends Controller
      */
     public function create()
     {
-        //
+        $data['months'] = Month::getCases();
+        $data['years'] = Year::getCases();
+        return view('target.target-form',$data);
     }
 
     /**

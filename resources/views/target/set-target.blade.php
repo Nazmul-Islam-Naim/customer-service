@@ -155,7 +155,7 @@
           render: function(data, type, row){
             var areas = '';
             $.each(data, function (key, value) { 
-               areas = value.name + ', ';
+               areas += value.name + ', ';
             });
             return areas;
           }
