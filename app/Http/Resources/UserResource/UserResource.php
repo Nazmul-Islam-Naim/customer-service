@@ -14,11 +14,7 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // dd($this->areas);
-        // $areas = [];
-        // foreach ($this->areas as $value) {
-        //     $areas[] = $value->name;
-        // }
+        $target = $this->target()->where('user_id',$this->id)->first();
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -31,7 +27,10 @@ class UserResource extends JsonResource
             'area' => $this->areas()->select('areas.id','areas.name')->get(),
             'avatar' => $this->avatar,
             'nid' => $this->nid,
-            'target' => $this->target,
+            'month' => $target->month,
+            'year' => $target->year,
+            'target' => $target->target,
+            'recovery' => $target->recovery,
             'status' => $this->status,
         ];
     }

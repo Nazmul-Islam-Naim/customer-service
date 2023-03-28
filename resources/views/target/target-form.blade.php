@@ -17,10 +17,10 @@
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
         @if(!empty($single_data))
-          {!! Form::open(array('route' =>['division.update', $single_data->id],'method'=>'PUT','files'=>true)) !!}
+          {!! Form::open(array('route' =>['targets.update', $single_data->id],'method'=>'PUT','files'=>true)) !!}
           <?php $info ="Update";?>
         @else
-        {!! Form::open(array('route' =>['division.store'],'method'=>'POST','files'=>true)) !!}
+        {!! Form::open(array('route' =>['targets.store'],'method'=>'POST','files'=>true)) !!}
           <?php $info ="Add";?>
         @endif
         <div class="card">
@@ -51,6 +51,12 @@
                     @endforeach
                   </select>
                   <div class="field-placeholder">Year<span class="text-danger">*</span></div>
+                </div>
+                <!-- Field wrapper end -->
+                <!-- Field wrapper start -->
+                <div class="field-wrapper">
+                  <input type="number" name="target" class="form-control @error('target') is-invalid @enderror">
+                  <div class="field-placeholder">Target<span class="text-danger">*</span></div>
                 </div>
                 <!-- Field wrapper end -->
               </div>

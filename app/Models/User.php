@@ -99,4 +99,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Area::class);
     }
 
+    public function target(){
+        return $this->hasOne(RegistrationTargetCurrent::class);
+    }
+
 }

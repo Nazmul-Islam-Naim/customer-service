@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Web;
 use App\Enum\Month;
 use App\Enum\Year;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TargetRequest\CreateRequest;
+use App\Models\RegistrationTargetCurrent;
+use App\Models\RegistrationTargetMonthly;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class TargetController extends Controller
@@ -19,7 +23,7 @@ class TargetController extends Controller
     {
         Gate::authorize('app.users.index');
         if ($request->ajax()) {
-            $alldata= User::with(['designation','role', 'division', 'district','areas'])
+            $alldata= User::with(['designation','role', 'division', 'district','areas','target'])
                             ->where([['role_id',2],['status',1]])
                             ->get();
             return DataTables::of($alldata)
@@ -52,9 +56,49 @@ class TargetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
+        try {
+
+            $users = User::where('role_id',2)->get();
+
+            $countMonthYear = RegistrationTargetCurrent::where([['month',$request->month],['year',$request->year]])->count();
+
+            if ($countMonthYear > 0) {
+                Session::flash('flash_message','Target already generated!');
+                return redirect()->route('targets.index')->with('status_color','warning');
+            } else {            
+                foreach ($users as $value) {
+                    RegistrationTargetCurrent::updateOrCreate(
+                        [
+                            'user_id' => $value->id
+                        ],
+                        [
+                            'month' => $request->month,
+                            'year' => $request->year,
+                            'target' => $request->target,
+                            'recovery' => 0,
+                        ],
+                    );
+    
+                    RegistrationTargetMonthly::create(
+                        [
+                            'user_id' => $value->id,
+                            'month' => $request->month,
+                            'year' => $request->year,
+                            'target' => $request->target,
+                            'recovery' => 0,
+                        ],
+                    );
+                }
+                Session::flash('flash_message','Target successfully generate.');
+                return redirect()->route('targets.index')->with('status_color','success');
+            }
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+            Session::flash('flash_message','Something Error Found !');
+            return redirect()->back()->with('status_color','danger');
+        }
     }
 
     /**

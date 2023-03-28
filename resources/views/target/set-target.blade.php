@@ -19,7 +19,7 @@
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">User List</div>
+            <div class="card-title">Current Target List</div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -33,7 +33,9 @@
                     <th>Division</th>
                     <th>District</th>
                     <th>Area</th>
-                    <th>Action</th>
+                    <th>Month</th>
+                    <th>Year</th>
+                    <th>Target</th>
                   </tr>
                 </thead>
               </table>
@@ -103,7 +105,7 @@
             {
                 extend: 'excel',
                 exportOptions: {
-                    columns: [ 0, 1, 2]
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8]
                 },
                 messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
             },
@@ -127,7 +129,7 @@
                 $(win.document.body).css("height", "auto").css("min-height", "0");
                 },
                 exportOptions: {
-                    columns: [ 0, 1, 2]
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8]
                 },
                 messageBottom: null
             }
@@ -161,7 +163,13 @@
           }
         },
         {
-          data: 'action',
+          data: 'target.month',
+        },
+        {
+          data: 'target.year',
+        },
+        {
+          data: 'target.target',
         },
 			]
     });
