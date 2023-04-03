@@ -24,7 +24,7 @@ Route::group(['prefix'=>'auth'],function(){
     Route::post('/login',[UserController::class,'login'])->middleware('guest:api');
     
     Route::group(['middleware'=>['auth:api']],function(){
-        Route::post('/profile',[UserController::class,'profile']);
+        Route::get('/profile',[UserController::class,'profile']);
         Route::put('/update',[UserController::class,'update']);
         Route::post('/logout',[UserController::class,'logout']);
     });

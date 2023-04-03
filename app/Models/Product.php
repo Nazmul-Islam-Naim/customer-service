@@ -18,6 +18,6 @@ class Product extends Model
     }
 
     public function customers(){
-        return $this->belongsToMany(Customer::class);
+        return $this->belongsToMany(Customer::class, 'product_customer', 'product_id', 'customer_id');
     }
 }

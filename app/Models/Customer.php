@@ -35,6 +35,6 @@ class Customer extends Model
     }
 
     public function products(){
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'product_customer', 'customer_id', 'product_id');
     }
 }

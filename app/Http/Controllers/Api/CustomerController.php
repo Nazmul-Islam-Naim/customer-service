@@ -7,6 +7,7 @@ use App\Http\Requests\CustomerRequest\CreateRequest;
 use App\Http\Requests\CustomerRequest\UpdateRequest;
 use App\Http\Resources\CustomerResource\CustomerResource;
 use App\Models\Customer;
+use App\Models\RegistrationTargetCurrent;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -47,9 +48,11 @@ class CustomerController extends Controller
             DB::beginTransaction();
             $customer = Customer::create($data);
             $customer->products()->attach($request->product_id);
+            RegistrationTargetCurrent::where('user_id',auth()->user()->id)->increment('recovery',1);
             DB::commit();
             return response()->json(['success'=>'Customer saved successfully.']);
         } catch (\Exception $exception) {
+            dd($exception->getMessage());
             return response()->json(['error'=>'Somthing went wrong!']);
         }
     }
