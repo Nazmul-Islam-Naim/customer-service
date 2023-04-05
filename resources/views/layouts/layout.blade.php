@@ -359,16 +359,18 @@
         {!!Html::script('custom/vendor/datatables/buttons.print.min.js')!!}
 
         <!-- Apex Charts -->
-         <!-- {!!Html::script('custom/vendor/apex/apexcharts.min.js')!!}
+        <!-- {!!Html::script('custom/vendor/apex/apexcharts.min.js')!!}
         {!!Html::script('custom/vendor/apex/custom/home/salesGraph.js')!!}
         {!!Html::script('custom/vendor/apex/custom/home/ordersGraph.js')!!}
         {!!Html::script('custom/vendor/apex/custom/home/earningsGraph.js')!!}
         {!!Html::script('custom/vendor/apex/custom/home/visitorsGraph.js')!!}
-        {!!Html::script('custom/vendor/apex/custom/home/customersGraph.js')!!}
-        {!!Html::script('custom/vendor/apex/custom/home/sparkline.js')!!} -->
+        {!!Html::script('custom/vendor/apex/custom/home/customersGraph.js')!!}-->
         
         {!!Html::script('custom/vendor/apex/apexcharts.min.js')!!}
-        {!!Html::script('custom/vendor/apex/examples/pie/basic-pie-graph.js')!!}
+        {!!Html::script('custom/vendor/apex/custom/home/sparkline.js')!!} 
+        
+        {{-- {!!Html::script('custom/vendor/apex/apexcharts.min.js')!!}
+        {!!Html::script('custom/vendor/apex/examples/pie/basic-pie-graph.js')!!} --}}
 
         <!-- Circleful Charts -->
         <!-- {!!Html::script('custom/vendor/circliful/circliful.min.js')!!}

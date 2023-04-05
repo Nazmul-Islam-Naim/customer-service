@@ -10,14 +10,7 @@
 		<!-- Row start -->
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div class="card" style="background: rgb(10, 97, 85)">
-					<div class="card-header">
-						<div class="card-title" style="color:white">Customer Map</div>
-					</div>
-					<div class="card-body">
-						<div id="mapid" style="height: 370px"></div>
-					</div>
-				</div>
+				<div id="mapid" style="height: 370px"></div>
 			</div>
 		</div>
 		<!-- Row end -->
@@ -27,7 +20,7 @@
 <!-- Content wrapper scroll end -->
 {!!Html::script('custom/js/jquery.min.js')!!}
 <script>
-	var mymap = L.map('mapid').setView([23.777176, 90.399452], 7);
+	var mymap = L.map('mapid').setView([23.777176, 90.399452], 10);
 
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',

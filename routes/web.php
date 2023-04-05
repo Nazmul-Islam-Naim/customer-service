@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\AreaController;
 use App\Http\Controllers\Web\DistrictController;
 use App\Http\Controllers\Web\DivisionController;
 use App\Http\Controllers\Web\FollowUpController;
+use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\RoleController;
@@ -30,9 +31,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('user-home');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('user-home');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('dashboard', [HomeController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth:web')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -71,13 +74,18 @@ Route::middleware('auth:web')->group(function () {
     //******** customers part *******//
     Route::prefix(config('app.customer'))->group(function () {
         Route::resource('customers', CustomerController::class);
+        Route::get('customer-map/{id}', [CustomerController::class,'customerMap'])->name('customer-map');
         Route::get('/map',function(){
             return view('map');
         });
 
         //ajax
         Route::post('get-products-by-business-cateygory-id',[CustomerController::class,'productsByCategory'])->name('get-products-by-business-cateygory-id');
+
+        // map
         Route::get('get-lat-long',[CustomerController::class,'getLatLong'])->name('get-lat-long');
+        Route::get('get-today-lat-long',[CustomerController::class,'getTodayLatLong'])->name('get-today-lat-long');
+
     });
 
     //******** follow up part *******//

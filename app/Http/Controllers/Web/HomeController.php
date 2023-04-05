@@ -4,16 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Enum\Status;
 use App\Http\Controllers\Controller;
-use App\Models\DesignationWiseAssetDetail;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\StockProduct;
-use App\Models\Requisition;
-use App\Models\Department;
-use App\Models\Designation;
-use App\Models\UserWiseAssetDetail;
-use App\Models\Product;
 use App\Models\User;
-use App\Models\Asset;
 use Session;
 use Auth;
 use DB;
@@ -37,20 +31,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data['product'] = Product::get();
-        foreach ($data['product'] as  $value) {
-            if (!empty($value)) {
-                $data['stockNotify'] = StockProduct::where('quantity','<=', $value->stock_notify)->count();
-            }
-        }
-        $data['department'] = Department::count();
-        $data['designation'] = Designation::count();
-        $data['stock'] = StockProduct::sum('quantity');
-        $data['product'] = Product::count();
-        $data['asset'] = DesignationWiseAssetDetail::sum('quantity');
-        $data['user'] = User::count();
-        $data['pendingrequisition'] = Requisition::authorized()->where('status',Status::Published->value)->orWhere('status',Status::Approver->value)->count();
-        $data['books'] = Asset::sum('quantity');
+        $data['users'] = User::where('role_id',2)->count();
+        $data['customers'] = Customer::count();
+        $data['todayCustomers'] = Customer::where('date',date('Y-m-d'))->count();
         return view('user-home',$data);
     }
 

@@ -140,9 +140,19 @@
         },
 				{
           data: 'lat',
+          render: function(data, type, row) {
+            var url = '{{route("customer-map",":id")}}'; 
+            var url = url.replace(':id', row.id);
+            return '<a href=' + url +'>'+ data +'</a>';
+          }
         },
 				{
           data: 'long',
+          render: function(data, type, row) {
+            var url = '{{route("customer-map",":id")}}'; 
+            var url = url.replace(':id', row.id);
+            return '<a href=' + url +'>'+ data +'</a>';
+          }
         },
 				{
           data: 'business_category.name',

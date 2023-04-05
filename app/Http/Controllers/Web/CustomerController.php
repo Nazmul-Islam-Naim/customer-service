@@ -201,6 +201,17 @@ class CustomerController extends Controller
         }
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function customerMap($id)
+    {
+        $data['customer'] = Customer::findOrFail($id);
+        return view('customer.customer-map',$data);
+    }
 
    /**
      * get product id by business categories id.
@@ -214,14 +225,23 @@ class CustomerController extends Controller
         return response()->json($products);
      }
    /**
-     * get product id by business categories id.
+     * get customer lat long.
      *
-     * @param  int  $businessCategoryId
      * @return \Illuminate\Http\Response
      */ 
 
      public function getLatLong(Request $request){
         $latLong = Customer::select('name','lat','long')->get();
+        return response()->json($latLong);
+     }
+   /**
+     * get customer today lat long.
+     *
+     * @return \Illuminate\Http\Response
+     */ 
+
+     public function getTodayLatLong(Request $request){
+        $latLong = Customer::where('date',date('Y-m-d'))->select('name','lat','long')->get();
         return response()->json($latLong);
      }
 }
