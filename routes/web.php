@@ -56,10 +56,12 @@ Route::middleware('auth:web')->group(function () {
         Route::resource('designation', DesignationController::class);
         Route::resource('user-list', UserController::class);
         Route::resource('user-role', RoleController::class);
+        Route::get('performance',[UserController::class,'userPerformace'])->name('performance');
 
         //ajax
         Route::post('get-district-by-division-id',[UserController::class, 'districtByDivision'])->name('get-district-by-division-id');
         Route::post('get-area-by-district-id',[UserController::class, 'areaByDistrict'])->name('get-area-by-district-id');
+        Route::get('performance-chart',[UserController::class, 'performanceChart'])->name('performance-chart');
     });
 
     //******** business and product part *******//

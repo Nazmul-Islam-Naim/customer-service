@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Designation;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\RegistrationTargetCurrent;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -240,6 +241,32 @@ class UserController extends Controller
         $user->delete();
         Session::flash('flash_message','User Successfully Updated !');
         return redirect()->back()->with('status_color','warning');
+    }
+
+    /**
+     * user performace .
+     *
+     * @return \Illuminate\Http\view
+     */
+    public function userPerformace()
+    {
+        // Gate::authorize('app.users.delete');
+        return view('user.user-performance');
+    }
+
+    /**
+     * user performace .
+     *
+     * @return \Illuminate\Http\response
+     */
+    public function performanceChart()
+    {
+        // Gate::authorize('app.users.delete');
+        $data['targets'] = RegistrationTargetCurrent::with('user')
+                                                    ->where([['month',date('F')],['year',date('Y')]])
+                                                    ->orderBy('recovery','desc')
+                                                    ->get();
+        return response()->json($data);
     }
 
     // dependeci input field

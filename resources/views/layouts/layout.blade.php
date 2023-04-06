@@ -97,7 +97,8 @@
                                 <li class="default-sidebar-dropdown {{(
                                     $url=='dashboard' || 
                                     $url==config('app.customer').'/map' ||
-                                    $url==config('app.customer').'/follow-up-map') ? 'active':''}}">
+                                    $url==config('app.customer').'/follow-up-map' ||
+                                    $url==config('app.user').'/performance') ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-home2"></i>
                                         <span class="menu-text">Dashboard</span>
@@ -112,6 +113,9 @@
                                             </li>
                                             <li>
                                                 <a href="{{$baseUrl.'/'.config('app.customer').'/follow-up-map'}}"  class="{{($url==config('app.customer').'/follow-up-map') ? 'current-page':''}}">Customer Follow Up Map</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.user').'/performance'}}"  class="{{($url==config('app.user').'/performance') ? 'current-page':''}}">User Performances</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -366,8 +370,7 @@
         {!!Html::script('custom/vendor/apex/custom/home/visitorsGraph.js')!!}
         {!!Html::script('custom/vendor/apex/custom/home/customersGraph.js')!!}-->
         
-        {!!Html::script('custom/vendor/apex/apexcharts.min.js')!!}
-        {!!Html::script('custom/vendor/apex/custom/home/sparkline.js')!!} 
+       
         
         {{-- {!!Html::script('custom/vendor/apex/apexcharts.min.js')!!}
         {!!Html::script('custom/vendor/apex/examples/pie/basic-pie-graph.js')!!} --}}
