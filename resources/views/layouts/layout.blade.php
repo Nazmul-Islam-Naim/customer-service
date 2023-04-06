@@ -114,9 +114,6 @@
                                             <li>
                                                 <a href="{{$baseUrl.'/'.config('app.customer').'/follow-up-map'}}"  class="{{($url==config('app.customer').'/follow-up-map') ? 'current-page':''}}">Customer Follow Up Map</a>
                                             </li>
-                                            <li>
-                                                <a href="{{$baseUrl.'/'.config('app.user').'/performance'}}"  class="{{($url==config('app.user').'/performance') ? 'current-page':''}}">User Performances</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </li>
@@ -235,12 +232,24 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <!-------------- change password part ------------>
-                                <li class="default-sidebar {{($url=='settings') ? 'active':''}}">
-                                    <a href="{{URL::to('settings')}}">
-                                        <i class="icon-lock"></i>
-                                        <span class="menu-text">Change Password</span>
+                                <!-------------- user performance part ------------>
+                                <li class="default-sidebar-dropdown {{(
+                                    $url==config('app.user').'/performance-list' ||
+                                    $url==config('app.user').'/performance-graph') ? 'active':''}}">
+                                    <a href="javascript::void(0)">
+                                        <i class="icon-box"></i>
+                                        <span class="menu-text">User Performance</span>
                                     </a>
+                                    <div class="default-sidebar-submenu">
+                                        <ul>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.user').'/performance-list'}}"  class="{{($url==config('app.user').'/performance-list') ? 'current-page':''}}">Performance List</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.user').'/performance-graph'}}"  class="{{($url==config('app.user').'/performance-graph') ? 'current-page':''}}">Performance Graph</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

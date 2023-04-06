@@ -13,7 +13,21 @@
     <!-- Row start -->
     <div class="row gutters">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div id="basic-column-graph-datalables" style="height: 450px"></div>
+        <div class="card card-primary">
+          <div class="card-header d-flex justify-content-between align-items-center">
+              <h3 class="card-title">Top ten user performance in this month</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div id="basic-column-graph-datalables" style="height: 450px"></div>
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+          <div class="card-footer"></div>
+        </div>
       </div>
     </div>
     <!-- Row end -->

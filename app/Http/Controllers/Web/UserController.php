@@ -248,10 +248,29 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\view
      */
-    public function userPerformace()
+    public function userPerformaceList(Request $request)
     {
         // Gate::authorize('app.users.delete');
-        return view('user.user-performance');
+        if ($request->ajax()) {
+            $alldata= RegistrationTargetCurrent::with(['user','user.areas'])
+                                                ->where([['month',date('F')],['year',date('Y')]])
+                                                ->orderBy('recovery','desc')
+                                                ->get();
+            return DataTables::of($alldata)
+            ->addIndexColumn()->make(True);
+        }
+        return view('user.performance-list');
+    }
+
+    /**
+     * user performace .
+     *
+     * @return \Illuminate\Http\view
+     */
+    public function userPerformaceGraph()
+    {
+        // Gate::authorize('app.users.delete');
+        return view('user.performance-graph');
     }
 
     /**
@@ -265,7 +284,7 @@ class UserController extends Controller
         $data['targets'] = RegistrationTargetCurrent::with('user')
                                                     ->where([['month',date('F')],['year',date('Y')]])
                                                     ->orderBy('recovery','desc')
-                                                    ->get();
+                                                    ->take(10)->get();
         return response()->json($data);
     }
 

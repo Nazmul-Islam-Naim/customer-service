@@ -2,18 +2,6 @@
 @section('title', 'User List')
 @section('content')
 <!-- Content Header (Page header) -->
-<style>
-    .img-thumbnail {
-    padding: 0.25rem;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-    max-width: none;
-    height: auto;
-    width:110px;
-    height:132px;
-}
-</style>
 <?php
   $baseUrl = URL::to('/');
 ?>
@@ -32,8 +20,7 @@
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card card-primary">
           <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title">User List</h3>
-              <a href="{{$baseUrl.'/'.config('app.user').'/user-list/create'}}" class="btn btn-sm btn-warning pull-right"><i class="icon-plus-circle"></i> <b>ADD USER</b></a>
+              <h3 class="card-title">All users performance list.</h3>
             </div>
           <!-- /.box-header -->
           <div class="card-body">
@@ -43,16 +30,15 @@
                   <table class="table table-bordered" id="example" style="width:100%"> 
                     <thead> 
                       <tr> 
-                      <th>#</th>
-                      <th>Image</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Mobile</th>
-                      <th>Designation</th>
-                      <th>Role</th>
-                      <th>Area</th>
-                      <th>Status</th>
-                      <th>Actions</th>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Area</th>
+                        <th>Target</th>
+                        <th>Recover</th>
+                        <th>Opposite</th>
+                        <th>Performance (%)</th>
                       </tr>
                     </thead>
                   </table>
@@ -71,30 +57,13 @@
 <!-- /.content -->
 {!!Html::script('custom/yajraTableJs/jquery.js')!!}
 <script>
-   // ==================== date format ===========
-   function dateFormat(data) { 
-    let date, month, year;
-    date = data.getDate();
-    month = data.getMonth() + 1;
-    year = data.getFullYear();
-
-    date = date
-        .toString()
-        .padStart(2, '0');
-
-    month = month
-        .toString()
-        .padStart(2, '0');
-
-    return `${date}-${month}-${year}`;
-  }
 	$(document).ready(function() {
 		'use strict';
       var table = $('#example').DataTable({
 			serverSide: true,
 			processing: true,
       deferRender : true,
-			ajax: "{{route('user-list.index')}}",
+			ajax: "{{route('performance-list')}}",
       "lengthMenu": [[ 100, 150, 250, -1 ],[ '100', '150', '250', 'All' ]],
       dom: 'Blfrtip',
         buttons: [
@@ -102,7 +71,7 @@
             {
                 extend: 'excel',
                 exportOptions: {
-                    columns: [ 0, 2, 3,4,5,6]
+                    columns: [ 0, 2, 3,4,5,6,7,8]
                 },
                 messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
             },
@@ -126,7 +95,7 @@
                 $(win.document.body).css("height", "auto").css("min-height", "0");
                 },
                 exportOptions: {
-                    columns: [ 0, 2, 3,4,5,6]
+                      columns: [ 0, 2, 3,4,5,6,7,8]
                 },
                 messageBottom: null
             }
@@ -138,7 +107,7 @@
           data: 'DT_RowIndex',
         },
 				{
-          data: 'avatar',
+          data: 'user.avatar',
           render: function(data, type, row) {
             if (data != null) {
             return "<img src={{ URL::to('/') }}/storage/" + data + " width='50px' height='50px' class='img-thumbnail' />";
@@ -148,7 +117,7 @@
           }
         },
 				{
-          data: 'name',
+          data: 'user.name',
           render: function(data, type, row) {
             var url = '{{route("user-list.show",":id")}}'; 
             var url = url.replace(':id', row.designation_id);
@@ -157,19 +126,10 @@
           }
         },
 				{
-          data: 'email',
+          data: 'user.phone',
         },
 				{
-          data: 'phone',
-        },
-        {
-          data: 'designation.title',
-        },
-				{
-          data: 'role.title',
-        },
-				{
-          data: 'areas',
+          data: 'user.areas',
           render: function(data, display, row){
             var allarea = '';
             $.each(data, function (key, value) { 
@@ -180,46 +140,24 @@
           }
         },
         {
-          data: 'status',
-          render: function(data, display, row){
-            if (data == 1) {
-							return "<a class='badge badge-sm bg-warning btn-status-active' data-id='" + row.id + "'>Active</a>";
-						}else{
-              return "<a class='badge badge-sm bg-success btn-status-deactive' data-id='" + row.id + "'>Inactive</a>";
-						}
+          data: 'target'
+        },
+        {
+          data: 'recovery'
+        },
+        {
+          data: 'target',
+          render: function(data,type,row){
+            return row.target - row.recovery;
           }
         },
         {
-          data: 'action',
+          data: 'target',
+          render: function(data,type,row){
+            return ((row.recovery*100)/ row.target).toFixed(2);
+          }
         },
 			]
-    });
-     //-------- Delete single data with Ajax --------------//
-     $("#example").on("click", ".button-delete", function(e) {
-			  e.preventDefault();
-
-        var confirm = window.confirm('Are you sure want to delete data?');
-        if (confirm != true) {
-          return false;
-        }
-        var id = $(this).data('id');
-        var link = '{{route("user-list.destroy",":id")}}';
-        var link = link.replace(':id', id);
-        var token = '{{csrf_token()}}';
-        $.ajax({
-          url: link,
-          type: 'POST',
-          data: {
-            '_method': 'DELETE',
-            '_token': token
-          },
-          success: function(data) {
-            table.ajax.reload();
-            console.log('success');
-            successNotification(data.message);
-          },
-
-        });
     });
 });
 </script>

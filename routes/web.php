@@ -56,7 +56,8 @@ Route::middleware('auth:web')->group(function () {
         Route::resource('designation', DesignationController::class);
         Route::resource('user-list', UserController::class);
         Route::resource('user-role', RoleController::class);
-        Route::get('performance',[UserController::class,'userPerformace'])->name('performance');
+        Route::get('performance-graph',[UserController::class,'userPerformaceGraph'])->name('performance-graph');
+        Route::get('performance-list',[UserController::class,'userPerformaceList'])->name('performance-list');
 
         //ajax
         Route::post('get-district-by-division-id',[UserController::class, 'districtByDivision'])->name('get-district-by-division-id');
