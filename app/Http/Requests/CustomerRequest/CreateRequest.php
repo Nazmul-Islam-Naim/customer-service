@@ -34,7 +34,7 @@ class CreateRequest extends FormRequest
             'area_id' =>['required'],  
             'business_cat_id' =>['required'], 
             'product_id' =>['required'], 
-            'date' =>['required', 'date_format:Y-m-d'],
+            'date' =>['nullable', 'date_format:Y-m-d'],
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\Customer;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\District;
@@ -260,6 +261,23 @@ class UserController extends Controller
             ->addIndexColumn()->make(True);
         }
         return view('user.performance-list');
+    }
+
+    /**
+     * customer Location.
+     *
+     * @return \Illuminate\Http\view
+     */
+    public function customerLocation($id)
+    {
+        // Gate::authorize('app.users.delete');
+        $user = User::findOrFail($id);
+        $customers = Customer::select('name','lat','long')
+                    ->where('user_id',$id)
+                    ->whereMonth('date',date('m'))
+                    ->whereYear('date',date('Y'))
+                    ->get();
+        return view('user.user-customer-map',compact('user', 'customers'));
     }
 
     /**

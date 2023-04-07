@@ -56,7 +56,23 @@
         {!!Html::style('custom/leaflet/1.7.1/css/leaflet.min.css')!!}
         <!-- leaflet Select js -->
         {!!Html::script('custom/leaflet/1.7.1/js/leaflet.min.js')!!}
-        
+        <style>
+             .default-sidebar-wrapper .default-sidebar-menu ul li.active a span {
+                font-weight: bold;
+            }
+
+            .default-sidebar-wrapper .default-sidebar-menu ul li.active a.current-page {
+                background: #17995e;
+                pointer-events: auto;
+                position: relative;
+                color: #ffffff;
+            }
+            .default-sidebar-wrapper .default-sidebar-menu ul li.active a.current-page:hover {
+                background: #17995e;
+                position: relative;
+                color: #ffffff;
+            }
+        </style>
     </head>
     <?php
         $baseUrl = URL::to('/');
@@ -109,10 +125,10 @@
                                                 <a href="{{$baseUrl.'/dashboard'}}"  class="{{($url=='dashboard') ? 'current-page':''}}">Dashboard</a>
                                             </li>
                                             <li>
-                                                <a href="{{$baseUrl.'/'.config('app.customer').'/map'}}"  class="{{($url==config('app.customer').'/map') ? 'current-page':''}}">Customer Map</a>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/map'}}"  class="{{($url==config('app.customer').'/map') ? 'current-page':''}}">Customer Location</a>
                                             </li>
                                             <li>
-                                                <a href="{{$baseUrl.'/'.config('app.customer').'/follow-up-map'}}"  class="{{($url==config('app.customer').'/follow-up-map') ? 'current-page':''}}">Customer Follow Up Map</a>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/follow-up-map'}}"  class="{{($url==config('app.customer').'/follow-up-map') ? 'current-page':''}}">Customer Follow Up Location</a>
                                             </li>
                                         </ul>
                                     </div>

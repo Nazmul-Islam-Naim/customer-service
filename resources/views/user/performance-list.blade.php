@@ -119,9 +119,8 @@
 				{
           data: 'user.name',
           render: function(data, type, row) {
-            var url = '{{route("user-list.show",":id")}}'; 
-            var url = url.replace(':id', row.designation_id);
-            var url = '#';
+            var url = '{{route("customer-location",":id")}}'; 
+            var url = url.replace(':id', row.user_id);
             return '<a href=' + url +'>'+ data +'</a>';
           }
         },

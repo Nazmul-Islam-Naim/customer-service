@@ -37,6 +37,7 @@ class CustomerController extends Controller
         $data['division_id'] = auth()->user()->division_id;
         $data['district_id'] = auth()->user()->district_id;
         $data['user_id'] = auth()->user()->id;
+        $data['date'] = date('Y-m-d');
 
         if(Arr::has($data, 'avatar')){
             $data['avatar'] = (Arr::pull($data, 'avatar'));
@@ -52,7 +53,6 @@ class CustomerController extends Controller
             DB::commit();
             return response()->json(['success'=>'Customer saved successfully.']);
         } catch (\Exception $exception) {
-            dd($exception->getMessage());
             return response()->json(['error'=>'Somthing went wrong!']);
         }
     }

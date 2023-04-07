@@ -41,7 +41,7 @@
 			$.each(response, function (key, value) { 
 				var marker = L.marker([value.lat, value.long]).addTo(mymap);
 				marker.bindPopup(value.name);
-				});
+			});
 		}
 	});
 </script>
