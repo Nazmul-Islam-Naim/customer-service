@@ -27,7 +27,8 @@ return new class extends Migration
             $table->foreignId('business_cat_id')->constrained('business_categories')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->date('date')->comment('entry date');
-            $table->date('deleted_at')->nullable();
+            $table->string('comment')->nullable();
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }

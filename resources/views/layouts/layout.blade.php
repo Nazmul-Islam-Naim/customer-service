@@ -201,7 +201,8 @@
                                 <!-------------- Customer part ------------>
                                 <li class="default-sidebar-dropdown {{(
                                     $url==config('app.customer').'/business-category' || $url==config('app.customer').'/business-category/create' || $url==(request()->is(config('app.customer').'/business-category/*/edit')) ||
-                                    $url==config('app.customer').'/customers' || $url==config('app.customer').'/customers/create' || $url==(request()->is(config('app.customer').'/customers/*/edit'))) ? 'active':''}}">
+                                    $url==config('app.customer').'/customers' || $url==config('app.customer').'/customers/create' || $url==(request()->is(config('app.customer').'/customers/*/edit')) ||
+                                    $url==config('app.customer').'/daily-customer-report') ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-box"></i>
                                         <span class="menu-text">Customer</span>
@@ -210,6 +211,9 @@
                                         <ul>
                                             <li>
                                                 <a href="{{$baseUrl.'/'.config('app.customer').'/customers'}}" class="{{($url==config('app.customer').'/customers' || $url==config('app.customer').'/customers/create' || $url==(request()->is(config('app.customer').'/customers/*/edit'))) ? 'current-page':''}}">Customer</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/daily-customer-report'}}" class="{{($url==config('app.customer').'/daily-customer-report') ? 'current-page':''}}">Daily Report</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -309,16 +313,15 @@
                                 <li class="dropdown">
                                     <a href="{{ route('user-list.show',auth()->user()->id) }}" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
                                         <span class="avatar">
-                                            {{-- @if (!empty(auth()->user()->image))
+                                            @if (!empty(auth()->user()->image))
                                             <img class="profile-user-img img-responsive img-fluid" src="{{asset('upload/user/'.auth()->user()->image)}}" alt="User profile picture">
                                             @else
-                                            <img class="profile-user-img img-responsive img-fluid" src="{{asset('upload/logo/no-image.jpg')}}" alt="User profile picture">
-                                            @endif --}}
+                                            <img class="profile-user-img img-responsive img-fluid" src="{{asset('custom/img/gazi.png')}}" alt="Admin profile picture">
+                                            @endif
                                         </span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end sm" aria-labelledby="userSettings" style="width: 21rem">
                                         <div class="header-profile-actions">
-                                            <a href="{{ route('user-list.show',auth()->user()->id) }}"><i class="icon-user1"></i>Profile</a>
                                             <a href="{{URL::to('settings')}}"><i class="icon-lock"></i>Change Password</a> 
                                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="icon-log-out1"></i>Logout</a>
 

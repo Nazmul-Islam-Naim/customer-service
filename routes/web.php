@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\SettingController;
 use App\Http\Controllers\Web\BusinessCategoryController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\DepartmentController;
@@ -82,6 +83,7 @@ Route::middleware('auth:web')->group(function () {
         Route::get('/map',function(){
             return view('map');
         });
+        Route::get('daily-customer-report', [CustomerController::class,'dailyCustomerReport'])->name('daily-customer-report');
 
         //ajax
         Route::post('get-products-by-business-cateygory-id',[CustomerController::class,'productsByCategory'])->name('get-products-by-business-cateygory-id');
@@ -105,6 +107,9 @@ Route::middleware('auth:web')->group(function () {
         Route::resource('targets', TargetController::class);
     });
 
+    //************ change password ***********/
+    Route::get('settings', [SettingController::class, 'index']);
+    Route::put('update-user-password/{id}', [SettingController::class, 'updateUserPassword'])->name('update-user-password');
 });
 
 require __DIR__.'/auth.php';

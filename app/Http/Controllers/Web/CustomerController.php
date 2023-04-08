@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Enum\Priority;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest\CreateRequest;
 use App\Http\Requests\CustomerRequest\UpdateRequest;
-use App\Models\Area;
 use App\Models\BusinessCategory;
-use App\Models\District;
-use App\Models\Division;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -66,7 +64,8 @@ class CustomerController extends Controller
     {
         $areas = auth()->user()->areas;
         $bCategories = BusinessCategory::select('id','name')->get();
-        return view('customer.create-edit-form',['areas' => $areas, 'bCategories' => $bCategories]);
+        $priorites = Priority::get();
+        return view('customer.create-edit-form',['areas' => $areas, 'bCategories' => $bCategories, 'priorites' => $priorites]);
     }
 
     /**
@@ -79,7 +78,7 @@ class CustomerController extends Controller
     {
         // Gate::authorize('app.Customers.create');
 
-        $ipAddress = '103.86.199.121';
+        $ipAddress = $request->ip();
 
         $location = Location::get($ipAddress);
         $data = $request->all();
@@ -132,12 +131,13 @@ class CustomerController extends Controller
         $allproducts = [];
         $areas = auth()->user()->areas;
         $bCategories = BusinessCategory::select('id','name')->get();
+        $priorites = Priority::get();
         $products = Product::select('id','name')->get();
         $single_data = Customer::find($id);
         foreach ($single_data->products as  $value) {
             $allproducts[] = $value->id;
         }
-        return view('customer.create-edit-form', ['areas' => $areas, 'bCategories' => $bCategories, 'products' => $products, 'single_data' => $single_data, 'allproducts' => $allproducts]);
+        return view('customer.create-edit-form', ['areas' => $areas, 'bCategories' => $bCategories,  'priorites' => $priorites, 'products' => $products, 'single_data' => $single_data, 'allproducts' => $allproducts]);
     }
 
     /**
@@ -151,7 +151,7 @@ class CustomerController extends Controller
     {
         // Gate::authorize('app.Customers.edit');
         $customer = Customer::findOrFail($id);
-        $ipAddress = '103.86.199.121';
+        $ipAddress = $request->ip();
 
         $location = Location::get($ipAddress);
         $data = $request->all();
@@ -243,6 +243,32 @@ class CustomerController extends Controller
      public function getTodayLatLong(Request $request){
         $latLong = Customer::where('date',date('Y-m-d'))->select('name','lat','long')->get();
         return response()->json($latLong);
+     }
+   /**
+     * daily customer.
+     *
+     * @return \Illuminate\Http\Response
+     */ 
+
+     public function dailyCustomerReport(Request $request){
+        // Gate::authorize('app.dvision.index'); 
+        if ($request->ajax()) {
+            if ($request->start_date != '' && $request->end_date != '') {
+                $alldata= Customer::with(['businessCategory','area','area.district', 'area.district.division', 'user'])
+                    ->whereBetween('date',[$request->start_date, $request->end_date])
+                    ->get();
+                return DataTables::of($alldata)
+                    ->addIndexColumn()->make(True);
+               
+            } else {
+                $alldata= Customer::with(['businessCategory','area','area.district', 'area.district.division', 'user'])
+                    ->get();
+                return DataTables::of($alldata)
+                    ->addIndexColumn()->make(True);
+                }
+            }
+            
+        return view('customer.daily-customer-report');
      }
 }
 

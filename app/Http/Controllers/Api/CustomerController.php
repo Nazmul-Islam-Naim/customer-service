@@ -8,6 +8,7 @@ use App\Http\Requests\CustomerRequest\UpdateRequest;
 use App\Http\Resources\CustomerResource\CustomerResource;
 use App\Models\Customer;
 use App\Models\RegistrationTargetCurrent;
+use App\Models\RegistrationTargetMonthly;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -50,10 +51,14 @@ class CustomerController extends Controller
             $customer = Customer::create($data);
             $customer->products()->attach($request->product_id);
             RegistrationTargetCurrent::where('user_id',auth()->user()->id)->increment('recovery',1);
+            RegistrationTargetMonthly::where('user_id',auth()->user()->id)
+                                    ->where('month',date('F'))    
+                                    ->where('year',date('Y'))    
+                                    ->increment('recovery',1);
             DB::commit();
-            return response()->json(['success'=>'Customer saved successfully.']);
+            return $this->respond($customer);
         } catch (\Exception $exception) {
-            return response()->json(['error'=>'Somthing went wrong!']);
+            return $this->exceptionRespond($exception);
         }
     }
 

@@ -11,7 +11,7 @@ class Customer extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'customers';
     protected $fillable = [ 'name', 'mobile', 'email', 'lat', 'long', 'address', 'avatar','division_id','district_id', 'area_id', 
-    'priority_id', 'business_cat_id', 'user_id', 'date', 'deleted_at'];
+    'priority_id', 'business_cat_id', 'user_id', 'date', 'comment', 'deleted_at'];
 
     //relation
     

@@ -35,6 +35,7 @@ class CreateRequest extends FormRequest
             'business_cat_id' =>['required'], 
             'product_id' =>['required'], 
             'date' =>['nullable', 'date_format:Y-m-d'],
+            'comment' =>['nullable', 'max:255'],
         ];
     }
 }

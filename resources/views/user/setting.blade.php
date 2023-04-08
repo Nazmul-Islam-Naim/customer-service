@@ -35,13 +35,17 @@
                           <div class="accordion-body">
                               {!! Form::open(array('route' =>['update-user-password',Auth::user()->id],'method'=>'PUT')) !!}
                               <div class="field-wrapper">
-                                  <input type="password" value="" name="password" id="newPass" class="keyup">
+                                  <input type="password" class="form-control @error('password') is-invalid @enderror" value=""  name="password" id="newPass" required autocomplete="off">
                                   <div class="field-placeholder">New Password</div>
+                                  @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                  @enderror
                               </div>
                               <div class="field-wrapper">
-                                  <input type="password" value="" name="password_confirmation" id="confirmPass" class="keyup">
+                                  <input type="password" class="form-control @error('password') is-invalid @enderror" value="" name="password_confirmation" id="confirmPass" required autocomplete="off">
                                   <div class="field-placeholder">Confirm Password</div>
-                                  <span id="confirmMsg"></span>
                               </div>
                               <div class="field-wrapper m-0">
                                   <button class="btn btn-primary stripes-btn">Save</button>
