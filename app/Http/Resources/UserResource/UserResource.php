@@ -26,7 +26,7 @@ class UserResource extends JsonResource
             'division' => $this->division->name,
             'district' => $this->district->name,
             'area' => $this->areas()->select('areas.id','areas.name')->get(),
-            'avatar' => $this->avatar,
+            'avatar' => Storage::url($this->avatar),
             'nid' => Storage::url($this->nid),
             'month' => $target->month ?? date("F"),
             'year' => $target->year ?? date("Y"),

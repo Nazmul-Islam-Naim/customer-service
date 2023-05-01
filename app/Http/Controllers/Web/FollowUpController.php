@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
+use App\Models\Customer;
 use App\Models\FollowUp;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,7 +25,9 @@ class FollowUpController extends Controller
 
         }
 
-        return view('followUp.follow-ups');
+        $areas = Area::all();
+
+        return view('followUp.area',compact('areas'));
     }
 
     /**
@@ -39,7 +43,7 @@ class FollowUpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -72,5 +76,39 @@ class FollowUpController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * area wise client.
+     */
+    public function client(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $alldata= Customer::with(['businessCategory','area','area.district', 'area.district.division', 'user'])
+                ->where('area_id',$id)
+                ->get();
+            return DataTables::of($alldata)
+                ->addIndexColumn()
+                ->addColumn('action',function($row){
+                    ob_start() ?>
+
+                        <ul class="list-inline m-0">
+                            <li class="list-inline-item">
+                                <a href="<?php echo route('follow-ups', $row->id); ?>" class="badge bg-primary badge-sm" data-id="<?php echo $row->id; ?>"><i class="icon-eye"></i> Follow</a>
+                            </li>
+                        </ul>
+
+                    <?php return ob_get_clean();
+                })->make(True);
+            }
+
+        $area = Area::findOrFail($id);
+
+        return view('followUp.client',compact('area'));
+    }
+
+    public function followUp($id){
+        $customer = Customer::findOrFail($id);
+        return view('followUp.form',compact('customer'));
     }
 }

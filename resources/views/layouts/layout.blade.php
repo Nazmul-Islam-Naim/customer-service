@@ -220,7 +220,9 @@
                                 </li>
                                 <!-------------- follow part ------------>
                                 <li class="default-sidebar-dropdown {{(
-                                    $url==config('app.customer').'/follow-ups' || $url==config('app.customer').'/follow-ups/create' || $url==(request()->is(config('app.customer').'/follow-ups/*/edit'))) ? 'active':''}}">
+                                    $url==config('app.customer').'/client-areas' || $url==config('app.customer').'/client-areas/create' || $url==(request()->is(config('app.customer').'/client-areas/*/edit')) ||
+                                    $url==(request()->is(config('app.customer').'/clients/*')) ||
+                                    $url==(request()->is(config('app.customer').'/follow-ups/*'))) ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-box"></i>
                                         <span class="menu-text">Follow Up</span>
@@ -228,7 +230,7 @@
                                     <div class="default-sidebar-submenu">
                                         <ul>
                                             <li>
-                                                <a href="{{$baseUrl.'/'.config('app.customer').'/follow-ups'}}" class="{{($url==config('app.customer').'/follow-ups' || $url==config('app.customer').'/follow-ups/create' || $url==(request()->is(config('app.customer').'/follow-ups/*/edit'))) ? 'current-page':''}}">Follow Ups</a>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/client-areas'}}" class="{{($url==config('app.customer').'/client-areas' || $url==config('app.customer').'/client-areas/create' || $url==(request()->is(config('app.customer').'/client-areas/*/edit'))) ? 'current-page':''}}">Client Areas</a>
                                             </li>
                                         </ul>
                                     </div>

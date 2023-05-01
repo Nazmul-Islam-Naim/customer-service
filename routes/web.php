@@ -96,7 +96,10 @@ Route::middleware('auth:web')->group(function () {
 
     //******** follow up part *******//
     Route::prefix(config('app.customer'))->group(function () {
-        Route::resource('follow-ups', FollowUpController::class);
+        Route::get('client-areas', [FollowUpController::class,'index'])->name('client-areas');
+        Route::get('clients/{id}', [FollowUpController::class,'client'])->name('clients');
+        Route::get('follow-ups/{id}', [FollowUpController::class,'followUp'])->name('follow-ups');
+        Route::post('follow-ups-store', [FollowUpController::class,'store'])->name('follow-ups-store');
         Route::get('/follow-up-map',function(){
             return 'under construction';
         });

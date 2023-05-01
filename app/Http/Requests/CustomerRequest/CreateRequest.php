@@ -30,7 +30,7 @@ class CreateRequest extends FormRequest
             'mobile' =>['required', 'max:15', Rule::unique(Customer::class)], 
             'email' =>['nullable', 'email',  Rule::unique(Customer::class)], 
             'address' =>['nullable', 'max:255'], 
-            'avatar' =>['nullable', 'max:255'],
+            'avatar' =>['required','image','dimensions:max_width=600,max_height=600'],
             'area_id' =>['required'],  
             'business_cat_id' =>['required'], 
             'product_id' =>['required'], 

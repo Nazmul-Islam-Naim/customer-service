@@ -18,7 +18,12 @@ class Area extends Model
         return $this->belongsTo(District::class);
     }
 
+    public function customers(){
+        return $this->hasMany(Customer::class);
+    }
+    
     public function users(){
         return $this->belongsToMany(User::class);
     }
+
 }
