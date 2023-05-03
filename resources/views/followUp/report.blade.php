@@ -1,6 +1,11 @@
 @extends('layouts.layout')
-@section('title', 'Daily Customer Report')
+@section('title', 'Follow up report')
 @section('content')
+<style>
+  table thead tr th {
+  word-wrap: break-word;
+}
+</style>
 <!-- Content Header (Page header) -->
 <?php
   $baseUrl = URL::to('/');
@@ -15,7 +20,7 @@
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         @include('common.message')
       </div>
-      
+
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <!-- general form elements -->
         <div class="card card-primary">
@@ -66,11 +71,11 @@
         </div>
         <!-- /.card -->
       </div>
-
+      
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Daily Customer Report</div>
+            <div class="card-title">Follow up report</div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -79,16 +84,17 @@
                 <thead>
                   <tr>
                     <th>Sl</th>
+                    {{-- <th>Avatar</th> --}}
                     <th>Date</th>
                     <th>Name</th>
                     <th>Mobile</th>
-                    <th>Lat</th>
-                    <th>Long</th>
-                    <th>Business</th>
                     <th>Area</th>
-                    <th>District</th>
-                    <th>Division</th>
-                    <th>User</th>
+                    <th>How is <br> business <br>going?</th>
+                    <th>How is our <br> product<br> doing?</th>
+                    <th>What is <br> the customer's <br> comment about <br> the quality?</th>
+                    <th>How many <br> products do <br> you sell <br> per month?</th>
+                    <th>Client<br> Comment</th>
+                    <th>Client <br>Priority</th>
                   </tr>
                 </thead>
               </table>
@@ -130,8 +136,8 @@
 			serverSide: true,
 			processing: true,
       deferRender : true,
-			ajax: {
-        url: "{{route('daily-customer-report')}}",
+      ajax: {
+        url: "{{route('follow-ups-report')}}",
         data: {start_date: start_date, end_date: end_date}
       },
       "lengthMenu": [[ 50, 150, 250, -1 ],[ '100', '150', '250', 'All' ]],
@@ -141,7 +147,7 @@
             {
                 extend: 'excel',
                 exportOptions: {
-                    columns: [ 0,1,2,3,4,5,6,7,8,9]
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                 },
                 messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
             },
@@ -165,7 +171,7 @@
                 $(win.document.body).css("height", "auto").css("min-height", "0");
                 },
                 exportOptions: {
-                    columns: [ 0,1,2,3,4,5,6,7,8,9]
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                 },
                 messageBottom: null
             }
@@ -176,48 +182,48 @@
         {
           data: 'DT_RowIndex',
         },
+				// {
+        //   data: 'customer.avatar',
+        //   render: function(data, type, row) {
+        //     if (data != null) {
+        //     return "<img src={{ URL::to('/') }}/storage/" + data + " width='50px' class='img-thumbnail' />";
+        //     } else {
+        //       return '<img src="{{asset("upload/logo/no-image.jpg")}}" width="50px" class="img-thumbnail" />'
+        //     }
+        //   }
+        // },
         {
           data: 'date',
-          render: function(data, type, row){
+          render:function(data,type,row){
             return dateFormat(new Date(data)).toString();
           }
         },
 				{
-          data: 'name',
+          data: 'customer.name',
         },
 				{
-          data: 'mobile',
-        },
-				{
-          data: 'lat',
-          render: function(data, type, row) {
-            var url = '{{route("customer-map",":id")}}'; 
-            var url = url.replace(':id', row.id);
-            return '<a href=' + url +'>'+ data +'</a>';
-          }
-        },
-				{
-          data: 'long',
-          render: function(data, type, row) {
-            var url = '{{route("customer-map",":id")}}'; 
-            var url = url.replace(':id', row.id);
-            return '<a href=' + url +'>'+ data +'</a>';
-          }
-        },
-				{
-          data: 'business_category.name',
+          data: 'customer.mobile',
         },
         {
           data: 'area.name',
         },
-        {
-          data: 'area.district.name',
-        },
-        {
-          data: 'area.district.division.name',
+				{
+          data: 'question1',
         },
 				{
-          data: 'user.name',
+          data: 'question2',
+        },
+				{
+          data: 'question3',
+        },
+				{
+          data: 'question5',
+        },
+				{
+          data: 'comment',
+        },
+				{
+          data: 'question4',
         },
 			]
     });

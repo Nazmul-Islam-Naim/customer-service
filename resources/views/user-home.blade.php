@@ -16,11 +16,11 @@
 			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
 				<div class="stats-tile">
 					<div class="sale-icon">
-						<i class="icon-users"></i>
+						<i class="icon-people_outline"></i>
 					</div>
 					<div class="sale-details">
 						<h4>{{$users}}</h4>
-						<a href="#"><p>Users</p></a>
+						<a href="{{route('user-list.index')}}"><p>Employees</p></a>
 					</div>
 					<div class="sale-graph">
 						<div id="sparklineLine1"></div>
@@ -31,11 +31,11 @@
 			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
 				<div class="stats-tile">
 					<div class="sale-icon">
-						<i class="icon-shopping-basket"></i>
+						<i class="icon-group_add"></i>
 					</div>
 					<div class="sale-details">
 						<h4>{{$customers}}</h4>
-						<a href="#"><p>Customers</p></a>
+						<a href="{{route('daily-customer-report')}}"><p>Customers</p></a>
 					</div>
 					<div class="sale-graph">
 						<div id="sparklineLine2"></div>
@@ -46,14 +46,59 @@
 			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
 				<div class="stats-tile">
 					<div class="sale-icon">
-						<i class="icon-shopping-bag"></i>
+						<i class="icon-person_outline"></i>
 					</div>
 					<div class="sale-details">
 						<h4>{{$todayCustomers}}</h4>
-						<a href="#"><p>Today Customers</p></a>
+						<a href="{{route('daily-customer-report')}}"><p>Today Customers</p></a>
 					</div>
 					<div class="sale-graph">
 						<div id="sparklineLine3"></div>
+					</div>
+				</div>
+			</div>
+			<!------------------- total area ---------------------->
+			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+				<div class="stats-tile">
+					<div class="sale-icon">
+						<i class="icon-pin_drop"></i>
+					</div>
+					<div class="sale-details">
+						<h4>{{$areas}}</h4>
+						<a href="{{route('area.index')}}"><p>Areas</p></a>
+					</div>
+					<div class="sale-graph">
+						<div id="sparklineLine4"></div>
+					</div>
+				</div>
+			</div>
+			<!------------------- total follow up ---------------------->
+			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+				<div class="stats-tile">
+					<div class="sale-icon">
+						<i class="icon-timeline"></i>
+					</div>
+					<div class="sale-details">
+						<h4>{{$followUps}}</h4>
+						<a href="{{route('follow-ups-report')}}"><p>Follow Ups</p></a>
+					</div>
+					<div class="sale-graph">
+						<div id="sparklineLine5"></div>
+					</div>
+				</div>
+			</div>
+			<!------------------- today follow up ---------------------->
+			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+				<div class="stats-tile">
+					<div class="sale-icon">
+						<i class="icon-light-down"></i>
+					</div>
+					<div class="sale-details">
+						<h4>{{$todayFollowUps}}</h4>
+						<a href="{{route('follow-ups-report')}}"><p>Today Follow Up</p></a>
+					</div>
+					<div class="sale-graph">
+						<div id="sparklineLine6"></div>
 					</div>
 				</div>
 			</div>

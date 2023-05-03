@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Enum\Status;
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Customer;
+use App\Models\FollowUp;
 use Illuminate\Http\Request;
 use App\Models\StockProduct;
 use App\Models\User;
@@ -34,6 +36,9 @@ class HomeController extends Controller
         $data['users'] = User::where('role_id',2)->count();
         $data['customers'] = Customer::count();
         $data['todayCustomers'] = Customer::where('date',date('Y-m-d'))->count();
+        $data['areas'] = Area::count();
+        $data['followUps'] = FollowUp::count();
+        $data['todayFollowUps'] = FollowUp::where('date',date('Y-m-d'))->count();
         return view('user-home',$data);
     }
 

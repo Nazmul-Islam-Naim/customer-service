@@ -100,9 +100,7 @@ Route::middleware('auth:web')->group(function () {
         Route::get('clients/{id}', [FollowUpController::class,'client'])->name('clients');
         Route::get('follow-ups/{id}', [FollowUpController::class,'followUp'])->name('follow-ups');
         Route::post('follow-ups-store', [FollowUpController::class,'store'])->name('follow-ups-store');
-        Route::get('/follow-up-map',function(){
-            return 'under construction';
-        });
+        Route::get('follow-ups-report', [FollowUpController::class,'followUpReport'])->name('follow-ups-report');
     });
 
     //******** target part *******//

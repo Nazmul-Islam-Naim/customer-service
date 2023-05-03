@@ -127,9 +127,6 @@
                                             <li>
                                                 <a href="{{$baseUrl.'/'.config('app.customer').'/map'}}"  class="{{($url==config('app.customer').'/map') ? 'current-page':''}}">Customer Location</a>
                                             </li>
-                                            <li>
-                                                <a href="{{$baseUrl.'/'.config('app.customer').'/follow-up-map'}}"  class="{{($url==config('app.customer').'/follow-up-map') ? 'current-page':''}}">Customer Follow Up Location</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </li>
@@ -139,7 +136,7 @@
                                     $url==config('app.area').'/district' || $url==config('app.area').'/district/create' || $url==(request()->is(config('app.area').'/district/*/edit')) ||
                                     $url==config('app.area').'/area' || $url==config('app.area').'/area/create' || $url==(request()->is(config('app.area').'/area/*/edit'))) ? 'active':''}}">
                                     <a href="javascript::void(0)">
-                                        <i class="icon-user"></i>
+                                        <i class="icon-globe"></i>
                                         <span class="menu-text">Area Management</span>
                                     </a>
                                     <div class="default-sidebar-submenu">
@@ -162,7 +159,7 @@
                                     $url==config('app.user').'/user-list' || $url==config('app.user').'/user-list/create' || $url==(request()->is(config('app.user').'/user-list/*/edit')) ||
                                     $url==config('app.user').'/user-role' || $url==config('app.user').'/user-role/create' || $url==(request()->is(config('app.user').'/user-role/*/edit'))) ? 'active':''}}">
                                     <a href="javascript::void(0)">
-                                        <i class="icon-user"></i>
+                                        <i class="icon-people_outline"></i>
                                         <span class="menu-text">Employee Management</span>
                                     </a>
                                     <div class="default-sidebar-submenu">
@@ -184,7 +181,7 @@
                                     $url==config('app.business').'/business-category' || $url==config('app.business').'/business-category/create' || $url==(request()->is(config('app.business').'/business-category/*/edit')) ||
                                     $url==config('app.business').'/products' || $url==config('app.business').'/products/create' || $url==(request()->is(config('app.business').'/products/*/edit'))) ? 'active':''}}">
                                     <a href="javascript::void(0)">
-                                        <i class="icon-box"></i>
+                                        <i class="icon-store_mall_directory"></i>
                                         <span class="menu-text">Business Management</span>
                                     </a>
                                     <div class="default-sidebar-submenu">
@@ -204,7 +201,7 @@
                                     $url==config('app.customer').'/customers' || $url==config('app.customer').'/customers/create' || $url==(request()->is(config('app.customer').'/customers/*/edit')) ||
                                     $url==config('app.customer').'/daily-customer-report') ? 'active':''}}">
                                     <a href="javascript::void(0)">
-                                        <i class="icon-box"></i>
+                                        <i class="icon-accessibility"></i>
                                         <span class="menu-text">Customer</span>
                                     </a>
                                     <div class="default-sidebar-submenu">
@@ -222,15 +219,19 @@
                                 <li class="default-sidebar-dropdown {{(
                                     $url==config('app.customer').'/client-areas' || $url==config('app.customer').'/client-areas/create' || $url==(request()->is(config('app.customer').'/client-areas/*/edit')) ||
                                     $url==(request()->is(config('app.customer').'/clients/*')) ||
-                                    $url==(request()->is(config('app.customer').'/follow-ups/*'))) ? 'active':''}}">
+                                    $url==(request()->is(config('app.customer').'/follow-ups/*')) ||
+                                    $url==config('app.customer').'/follow-ups-report') ? 'active':''}}">
                                     <a href="javascript::void(0)">
-                                        <i class="icon-box"></i>
+                                        <i class="icon-my_location"></i>
                                         <span class="menu-text">Follow Up</span>
                                     </a>
                                     <div class="default-sidebar-submenu">
                                         <ul>
                                             <li>
                                                 <a href="{{$baseUrl.'/'.config('app.customer').'/client-areas'}}" class="{{($url==config('app.customer').'/client-areas' || $url==config('app.customer').'/client-areas/create' || $url==(request()->is(config('app.customer').'/client-areas/*/edit'))) ? 'current-page':''}}">Client Areas</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.customer').'/follow-ups-report'}}" class="{{($url==config('app.customer').'/follow-ups-report') ? 'current-page':''}}">Follow Up Report</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -240,7 +241,7 @@
                                     $url==config('app.customer').'/targets/create' ||
                                     $url==config('app.customer').'/targets' || $url==(request()->is(config('app.customer').'/targets/*/edit'))) ? 'active':''}}">
                                     <a href="javascript::void(0)">
-                                        <i class="icon-box"></i>
+                                        <i class="icon-star-outlined"></i>
                                         <span class="menu-text">Targets</span>
                                     </a>
                                     <div class="default-sidebar-submenu">
@@ -259,7 +260,7 @@
                                     $url==config('app.user').'/performance-list' ||
                                     $url==config('app.user').'/performance-graph') ? 'active':''}}">
                                     <a href="javascript::void(0)">
-                                        <i class="icon-box"></i>
+                                        <i class="icon-bar-chart"></i>
                                         <span class="menu-text">User Performance</span>
                                     </a>
                                     <div class="default-sidebar-submenu">

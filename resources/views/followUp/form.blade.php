@@ -47,6 +47,7 @@
               
               <!-- Row start -->
               <div class="row gutters">
+                <input type="hidden" name="customer_id" value="{{$customer->id}}">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <label for="question1title">How is business going?<span class="text-danger">*</span></label><br>
                     <label class="form-check-label" for="question1good">
@@ -121,11 +122,11 @@
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <label for="question5">How many products do you sell per month?</label><br>
-                    <input type="number" name="question5" class="form-control @error('question5')@enderror" value="{{old('question5')}}">
+                    <input type="number" name="question5" class="form-control @error('question5') is-invalid @enderror" value="{{old('question5')}}">
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <label for="comment">Client Comment</label><br>
-                    <textarea name="comment" id="comment" class="form-control @error('comment')@enderror" style="height: 40px;">{{old('comment')}}</textarea>
+                    <textarea name="comment" id="comment" class="form-control @error('comment') is-invalid @enderror" style="height: 40px;">{{old('comment')}}</textarea>
                 </div>
               </div>
               <!-- Row end -->
