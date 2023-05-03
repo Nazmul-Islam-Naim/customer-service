@@ -2,7 +2,7 @@
 @section('title', 'User List')
 @section('content')
 <!-- Content Header (Page header) -->
-<style>
+{{-- <style>
     .img-thumbnail {
     padding: 0.25rem;
     background-color: #fff;
@@ -13,7 +13,7 @@
     width:110px;
     height:132px;
 }
-</style>
+</style> --}}
 <?php
   $baseUrl = URL::to('/');
 ?>
