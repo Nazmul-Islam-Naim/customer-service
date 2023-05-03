@@ -25,9 +25,5 @@ class RoleSeeder extends Seeder
             ->permissions()
             ->sync([]);   
 
-        Role::updateOrCreate(['title' => 'Store Keeper', 'slug' => 'store-keeper', 'deletable' => false])
-            ->permissions()
-            ->sync([]);     
-
     }
 }

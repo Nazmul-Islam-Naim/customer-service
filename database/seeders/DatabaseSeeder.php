@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
         $this->call(DistrictSeeder::class);
         $this->call(AreaSeeder::class);
         $this->call(userSeeder::class);
-        $this->call(BusinessCategorySeeder::class);
-        $this->call(ProductSeeder::class);
-        $this->call(CustomerSeeder::class);
-        $this->call(RegistrationTargetCurrentSeeder::class);
-        $this->call(RegistrationTargetMonthlySeeder::class);
+        // $this->call(BusinessCategorySeeder::class);
+        // $this->call(ProductSeeder::class);
+        // $this->call(CustomerSeeder::class);
+        // $this->call(RegistrationTargetCurrentSeeder::class);
+        // $this->call(RegistrationTargetMonthlySeeder::class);
     }
 }
